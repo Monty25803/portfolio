@@ -12,7 +12,9 @@ export const profile = {
   company: "PDCloudEx",
   experienceYears: "2+ years",
   openToWork: true,
-  availability: "Available for immediate start · Open to remote, hybrid & on-site",
+  openToFreelance: true,
+  workPreference: "Remote only · Hybrid only if work-from-home is allowed · Open to freelance projects",
+  availability: "Available for immediate start · Remote only · Hybrid (WFH) · Freelance projects welcome",
   resumeUrl: "/resume.pdf",
   resumeUpdated: "July 2026",
   primaryStack: ["Python", "Django", "Angular", "PostgreSQL", "Agentic AI"],
@@ -40,6 +42,7 @@ export const profile = {
   highlights: [
     "Agentic AI–assisted development",
     "Python · Django · Angular stack",
+    "Open to freelance projects",
     "Medall Client Channel Onboarding (completed)",
     "Metropolis Procurement System (SCM)",
   ],

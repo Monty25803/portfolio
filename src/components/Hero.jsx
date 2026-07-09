@@ -31,7 +31,7 @@ export default function Hero() {
             {profile.openToWork && (
               <p className="mb-3 inline-flex items-center gap-2 rounded-sm border border-[var(--color-accent)]/30 bg-[var(--color-accent)]/10 px-3 py-1 font-mono text-xs text-[var(--color-accent)]">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--color-accent)]" />
-                Open to opportunities
+                Open to remote & freelance
               </p>
             )}
             <p className="mb-4 flex items-center font-mono text-sm text-[var(--color-muted)]">

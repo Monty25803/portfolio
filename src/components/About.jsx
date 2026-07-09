@@ -44,6 +44,7 @@ export default function About() {
               </h3>
               <dl className="space-y-4 text-sm">
                 <Fact label="Location" value={profile.location} />
+                <Fact label="Work mode" value={profile.workPreference} />
                 <Fact label="Company" value={profile.company} />
                 <Fact label="Experience" value={profile.experienceYears} />
                 <Fact label="Stack" value="Python · Django · Angular" />

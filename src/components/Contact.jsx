@@ -31,7 +31,7 @@ export default function Contact() {
                 compact
                 label="Contact"
                 title="Let's build something great"
-                subtitle="Open to software development roles, backend engineering positions, and collaboration opportunities."
+                subtitle="Open to remote roles, freelance projects, and collaborations — hybrid only when work-from-home is allowed."
               />
 
               <ProfilePhoto variant="sidebar" className="mb-8 lg:hidden" showCaption={false} />
