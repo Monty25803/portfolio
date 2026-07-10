@@ -2,6 +2,8 @@
 
 A modern, responsive portfolio website built with React, Vite, and Tailwind CSS.
 
+**Live site:** [https://deviprasana.vercel.app](https://deviprasana.vercel.app)
+
 ## Quick start
 
 ```bash

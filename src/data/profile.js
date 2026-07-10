@@ -7,6 +7,7 @@ export const profile = {
   location: "Brahmapur, Odisha, India",
   email: "deviprasanamishra@gmail.com",
   linkedin: "https://www.linkedin.com/in/devi-prasana-mishra-606064bb/",
+  website: "https://deviprasana.vercel.app",
   photo: "/profile.png",
   photoFallback: "https://unavatar.io/linkedin/devi-prasana-mishra-606064bb",
   company: "PDCloudEx",

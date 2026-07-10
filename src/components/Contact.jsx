@@ -47,6 +47,15 @@ export default function Contact() {
                 <a href={`mailto:${profile.email}`} className="mb-4 block text-[var(--color-accent)] hover:underline">
                   {profile.email}
                 </a>
+                <p className="mb-1 text-sm text-[var(--color-muted)]">Website</p>
+                <a
+                  href={profile.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mb-4 block text-[var(--color-accent)] hover:underline"
+                >
+                  {profile.website.replace("https://", "")}
+                </a>
                 <p className="text-sm text-[var(--color-muted)]">
                   📍 {profile.location} · {profile.availability}
                 </p>
