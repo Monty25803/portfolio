@@ -1,8 +1,14 @@
 # Devi Prasana Mishra — Portfolio
 
-A modern, responsive portfolio website built with React, Vite, and Tailwind CSS.
+Personal portfolio site for **Devi Prasana Mishra**: projects, experience, skills, and contact.
 
 **Live site:** [https://deviprasana.vercel.app](https://deviprasana.vercel.app)
+
+## Features
+
+- Responsive layout for desktop and mobile
+- Profile-driven content (edit one data file)
+- Fast Vite build, ready for Vercel / Netlify / GitHub Pages
 
 ## Quick start
 
@@ -11,7 +17,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Open [http://localhost:5173](http://localhost:5173).
 
 ## Build for production
 
@@ -20,11 +26,11 @@ npm run build
 npm run preview
 ```
 
-The `dist/` folder can be deployed to [Vercel](https://vercel.com), [Netlify](https://netlify.com), or GitHub Pages.
+Deploy the `dist/` folder to [Vercel](https://vercel.com), [Netlify](https://netlify.com), or GitHub Pages.
 
 ## Customize
 
-Edit `src/data/profile.js` to update your bio, experience, skills, projects, and contact links.
+Edit `src/data/profile.js` to update bio, experience, skills, projects, and contact links.
 
 ## Tech stack
 
