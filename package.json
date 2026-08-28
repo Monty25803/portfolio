@@ -1,7 +1,7 @@
 {
   "name": "devi-prasana-portfolio",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,6 +11,7 @@
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "gsap": "^3.15.0",
+    "lucide-react": "^0.487.0",
     "motion": "^12.42.2",
     "ogl": "^1.0.11",
     "react": "^18.3.1",
@@ -18,8 +19,11 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
     "@vitejs/plugin-react": "^4.3.4",
     "tailwindcss": "^4.0.0",
+    "typescript": "^7.0.2",
     "vite": "^5.4.11"
   }
 }

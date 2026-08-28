@@ -1,0 +1,504 @@
+import { AnimatePresence, m } from "motion/react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
+import { Mail, Github, Linkedin, MapPin, FileDown } from "lucide-react";
+import { useIsMobile } from "../hooks/useMediaQuery";
+import { profile } from "../data/profile";
+
+const FONT_SERIF = '"Playfair Display", Georgia, serif';
+const FONT_MONO = '"DM Mono", monospace';
+const FONT_SANS = '"DM Sans", sans-serif';
+const RESUME_FILENAME = "Devi_Prasana_Mishra_Resume.pdf";
+
+export default function ContactAshwin() {
+  const isMobile = useIsMobile();
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const innerRef = useRef(null);
+  const rafRef = useRef(0);
+  const headerGapRef = useRef(null);
+  const maxOffsetRef = useRef(0);
+  const cachedTopRef = useRef(null);
+
+  const [vpH, setVpH] = useState(() =>
+    typeof window !== "undefined" ? window.innerHeight : 900,
+  );
+  const [sectionH, setSectionH] = useState(() =>
+    typeof window !== "undefined" ? window.innerHeight : 900,
+  );
+
+  const [copyToastMessage, setCopyToastMessage] = useState(null);
+  const [downloadToastMessage, setDownloadToastMessage] = useState(null);
+
+  useEffect(() => {
+    if (isMobile) return;
+    const measure = () => {
+      const header = headerRef.current;
+      const inner = innerRef.current;
+      if (!header || !inner) return;
+      const vh = window.innerHeight;
+      const headerH = header.offsetHeight;
+      const contentH = inner.scrollHeight;
+      const stripH = Math.max(0, vh - headerH);
+      const maxOffset = Math.max(0, contentH - stripH);
+      maxOffsetRef.current = maxOffset;
+      cachedTopRef.current = null;
+      setVpH(vh);
+      setSectionH(vh + maxOffset);
+    };
+    requestAnimationFrame(measure);
+    window.addEventListener("resize", measure, { passive: true });
+    return () => window.removeEventListener("resize", measure);
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (isMobile) return;
+    const scroller = document.querySelector(".hologram-interface");
+    const section = sectionRef.current;
+    if (!scroller || !section) return;
+
+    const measureTop = () => {
+      let acc = 0;
+      let el = section;
+      while (el && el !== scroller) {
+        acc += el.offsetTop;
+        el = el.offsetParent;
+      }
+      cachedTopRef.current = acc;
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(() => {
+        if (cachedTopRef.current === null) measureTop();
+        const raw = scroller.scrollTop - (cachedTopRef.current ?? 0);
+        const offset = Math.max(0, Math.min(maxOffsetRef.current, raw));
+        if (innerRef.current) {
+          innerRef.current.style.transform = `translateY(-${offset}px)`;
+        }
+        const compressRatio = Math.min(1, offset / 100);
+        const gapPx = 80 * (1 - compressRatio) + 20 * compressRatio;
+        if (headerGapRef.current) {
+          headerGapRef.current.style.marginBottom = `${gapPx}px`;
+        }
+      });
+    };
+
+    scroller.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener(
+      "resize",
+      () => {
+        cachedTopRef.current = null;
+      },
+      { passive: true },
+    );
+    return () => {
+      scroller.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [isMobile]);
+
+  useLayoutEffect(() => {
+    if (isMobile) return;
+    const scroller = document.querySelector(".hologram-interface");
+    const section = sectionRef.current;
+    if (!scroller || !section || !innerRef.current) return;
+    let acc = 0;
+    let el = section;
+    while (el && el !== scroller) {
+      acc += el.offsetTop;
+      el = el.offsetParent;
+    }
+    cachedTopRef.current = acc;
+    const raw = scroller.scrollTop - acc;
+    const offset = Math.max(0, Math.min(maxOffsetRef.current, raw));
+    innerRef.current.style.transform = `translateY(-${offset}px)`;
+    if (headerGapRef.current) {
+      const compressRatio = Math.min(1, offset / 100);
+      headerGapRef.current.style.marginBottom = `${80 * (1 - compressRatio) + 20 * compressRatio}px`;
+    }
+  }, [isMobile, sectionH]);
+
+  const copyEmailToClipboard = async () => {
+    try {
+      await globalThis.navigator.clipboard.writeText(profile.email);
+      setCopyToastMessage("Email copied to clipboard!");
+      setTimeout(() => setCopyToastMessage(null), 1600);
+    } catch {
+      setCopyToastMessage("Could not copy email");
+      setTimeout(() => setCopyToastMessage(null), 1800);
+    }
+  };
+
+  const handleResumeDownload = () => {
+    setDownloadToastMessage("Resume downloaded!");
+    setTimeout(() => setDownloadToastMessage(null), 1600);
+  };
+
+  const githubDisplay = profile.github.replace(/^https?:\/\//, "");
+  const linkedinDisplay = profile.linkedin.replace(/^https?:\/\//, "").replace(/\/$/, "");
+
+  const links = [
+    {
+      label: "Resume",
+      value: RESUME_FILENAME,
+      href: profile.resumeUrl,
+      icon: <FileDown size={14} />,
+      download: RESUME_FILENAME,
+    },
+    {
+      label: "Email",
+      value: profile.email,
+      href: `mailto:${profile.email}`,
+      icon: <Mail size={14} />,
+    },
+    {
+      label: "GitHub",
+      value: githubDisplay,
+      href: profile.github,
+      icon: <Github size={14} />,
+    },
+    {
+      label: "LinkedIn",
+      value: linkedinDisplay,
+      href: profile.linkedin,
+      icon: <Linkedin size={14} />,
+    },
+    {
+      label: "Location",
+      value: profile.location,
+      href: `https://maps.google.com/?q=${encodeURIComponent(profile.location)}`,
+      icon: <MapPin size={14} />,
+    },
+  ];
+
+  return (
+    <section
+      ref={sectionRef}
+      id="contact"
+      style={{
+        position: "relative",
+        height: isMobile ? "auto" : sectionH,
+        background: "transparent",
+        ...(isMobile && { padding: "4rem 4vw 3rem" }),
+      }}
+    >
+      <div
+        style={
+          isMobile
+            ? {}
+            : {
+                position: "sticky",
+                top: 0,
+                height: vpH,
+                overflow: "hidden",
+                display: "flex",
+                flexDirection: "column",
+              }
+        }
+      >
+        <div
+          ref={headerRef}
+          style={isMobile ? {} : { padding: "0.85rem 6vw 2rem" }}
+        >
+          <div
+            ref={headerGapRef}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "1rem",
+              marginBottom: isMobile ? "2rem" : "80px",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: FONT_MONO,
+                fontSize: "0.62rem",
+                letterSpacing: "0.2em",
+                color: "rgba(255,255,255,0.4)",
+                textTransform: "uppercase",
+              }}
+            >
+              Contact
+            </span>
+            <div
+              style={{
+                flex: 1,
+                height: "1px",
+                background: "rgba(255,255,255,0.07)",
+              }}
+            />
+          </div>
+          <div style={{ overflow: "hidden" }}>
+            <m.h2
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+              style={{
+                fontFamily: FONT_SERIF,
+                fontSize: isMobile
+                  ? "clamp(1.8rem, 7vw, 4rem)"
+                  : "clamp(2.6rem, 4.5vw, 4rem)",
+                fontWeight: 800,
+                lineHeight: 1.05,
+                letterSpacing: "0.02em",
+                color: "#fafaf8",
+                margin: 0,
+              }}
+            >
+              Hard problems welcome.
+            </m.h2>
+          </div>
+        </div>
+
+        <div
+          style={
+            isMobile
+              ? {}
+              : { flex: 1, position: "relative", overflow: "hidden" }
+          }
+        >
+          <div
+            ref={innerRef}
+            style={
+              isMobile
+                ? { paddingTop: "2rem" }
+                : {
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    padding: "1.5rem 6vw 4rem",
+                  }
+            }
+          >
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+                gap: isMobile ? "3rem" : "8vw",
+                alignItems: "start",
+              }}
+            >
+              <div>
+                <m.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 }}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    padding: "10px 16px",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: "4px",
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "7px",
+                      height: "7px",
+                      borderRadius: "50%",
+                      background: "#ef4444",
+                      boxShadow: "0 0 8px #ef4444",
+                      animation: "pulse 2s infinite",
+                      flexShrink: 0,
+                    }}
+                  />
+                  <span
+                    style={{
+                      fontFamily: '"DM Mono", monospace',
+                      fontSize: "0.55rem",
+                      letterSpacing: "0.2em",
+                      color: "rgba(255,255,255,0.55)",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    Optimising: Backends · Not: Buzzwords
+                  </span>
+                </m.div>
+
+                <m.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  style={{
+                    fontFamily: FONT_SANS,
+                    fontSize: "1rem",
+                    lineHeight: 1.7,
+                    color: "rgba(255,255,255,0.6)",
+                    maxWidth: "400px",
+                    textAlign: "justify",
+                    textJustify: "inter-word",
+                  }}
+                >
+                  {profile.openToWork
+                    ? "Open to remote roles, hybrid with WFH, and freelance projects. If you've got a backend problem, an enterprise workflow, or want to talk Django, Angular, and agentic AI delivery — I'm always up for that."
+                    : profile.philosophy}
+                </m.p>
+              </div>
+
+              <m.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25 }}
+                style={{ display: "flex", flexDirection: "column", gap: "0" }}
+              >
+                {links.map(({ label, value, href, icon, download }, i) => (
+                  <m.a
+                    key={i}
+                    href={href}
+                    download={download ?? undefined}
+                    target={
+                      !download && href.startsWith("http")
+                        ? "_blank"
+                        : undefined
+                    }
+                    rel={
+                      !download && href.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                    whileHover={{ x: 4 }}
+                    onClick={
+                      label === "Email"
+                        ? (e) => {
+                            e.preventDefault();
+                            void copyEmailToClipboard();
+                          }
+                        : label === "Resume"
+                          ? () => handleResumeDownload()
+                          : undefined
+                    }
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1rem",
+                      padding: "1rem 0",
+                      borderBottom: "1px solid rgba(255,255,255,0.05)",
+                      textDecoration: "none",
+                      transition: "all 0.2s",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderBottomColor =
+                        "rgba(255,255,255,0.35)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderBottomColor =
+                        "rgba(255,255,255,0.05)";
+                    }}
+                  >
+                    <span
+                      style={{ color: "rgba(255,255,255,0.4)", width: "16px" }}
+                    >
+                      {icon}
+                    </span>
+                    <div style={{ flex: 1 }}>
+                      <p
+                        style={{
+                          fontFamily: FONT_MONO,
+                          fontSize: "0.58rem",
+                          letterSpacing: "0.15em",
+                          color: "rgba(255,255,255,0.4)",
+                          textTransform: "uppercase",
+                          marginBottom: "2px",
+                        }}
+                      >
+                        {label}
+                      </p>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "12px",
+                        }}
+                      >
+                        <p
+                          style={{
+                            fontFamily: FONT_SANS,
+                            fontSize: "0.85rem",
+                            color: "rgba(255,255,255,0.5)",
+                            margin: 0,
+                          }}
+                        >
+                          {value}
+                        </p>
+                        {(label === "Email" || label === "Resume") && (
+                          <AnimatePresence mode="wait">
+                            {(label === "Email"
+                              ? copyToastMessage
+                              : downloadToastMessage) && (
+                              <m.p
+                                key={
+                                  label === "Email"
+                                    ? copyToastMessage
+                                    : downloadToastMessage
+                                }
+                                initial={{ opacity: 0, x: -6, scale: 0.98 }}
+                                animate={{ opacity: 1, x: 0, scale: 1 }}
+                                exit={{ opacity: 0, x: -4, scale: 0.98 }}
+                                transition={{
+                                  duration: 0.75,
+                                  ease: [0.22, 1, 0.36, 1],
+                                }}
+                                style={{
+                                  fontFamily: FONT_SANS,
+                                  fontSize: "0.78rem",
+                                  color: "#4ade80",
+                                  border: "1px solid rgba(74,222,128,0.35)",
+                                  background: "rgba(74,222,128,0.06)",
+                                  borderRadius: "999px",
+                                  padding: "4px 10px",
+                                  whiteSpace: "nowrap",
+                                  margin: 0,
+                                }}
+                              >
+                                {label === "Email"
+                                  ? copyToastMessage
+                                  : downloadToastMessage}
+                              </m.p>
+                            )}
+                          </AnimatePresence>
+                        )}
+                      </div>
+                    </div>
+                    <span
+                      style={{
+                        color: "rgba(255,255,255,0.35)",
+                        fontSize: "0.7rem",
+                      }}
+                    >
+                      ↗
+                    </span>
+                  </m.a>
+                ))}
+              </m.div>
+            </div>
+
+            <div
+              style={{
+                textAlign: "center",
+                marginTop: isMobile ? "5rem" : "8rem",
+                paddingTop: "2rem",
+                borderTop: "1px solid rgba(255,255,255,0.07)",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: FONT_MONO,
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.12em",
+                  color: "rgba(255,255,255,0.5)",
+                  textTransform: "uppercase",
+                }}
+              >
+                ⚡ Built by {profile.givenName} {profile.familyName} • 🚀 Deployed
+                on Vercel
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

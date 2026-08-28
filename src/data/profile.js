@@ -5,6 +5,7 @@ export const profile = {
   title: "Software Developer",
   tagline: "Building scalable backend systems with Python, Django & Angular — powered by agentic AI",
   location: "Brahmapur, Odisha, India",
+  homeAirport: { code: "BBI", tz: "Asia/Kolkata" },
   email: "deviprasanamishra@gmail.com",
   linkedin: "https://www.linkedin.com/in/devi-prasana-mishra-606064bb/",
   website: "https://deviprasana.vercel.app",
@@ -54,6 +55,39 @@ export const profile = {
   marqueeText:
     "From architecture to production. Clean, scalable backend systems built to move fast, stay reliable, and perform in real-world enterprise use — driven by clarity, structured APIs, and intentional design.",
 };
+
+export const pillars = [
+  {
+    title: "Backend as a System",
+    description:
+      "Most teams ship APIs as endpoints. The real questions — data integrity, workflow state, auth boundaries, and what happens under load — are architecture questions. I answer them before the first release.",
+  },
+  {
+    title: "Execution Under Constraints",
+    description:
+      "Systems that work in demos often fail in production. Real constraints — latency, inventory accuracy, approval workflows — are known at design time. I build the constraint model first.",
+  },
+  {
+    title: "Agentic AI Development",
+    description:
+      "AI-assisted coding isn't a shortcut — it's a delivery multiplier when paired with clear architecture, code review discipline, and production-minded testing.",
+  },
+];
+
+export const dontDo = [
+  "I don't ship half-finished dashboards dressed as products. UI without reliable APIs isn't a system.",
+  "I don't build for novelty. The software has to earn what it costs to run and maintain.",
+  "I don't take copy-paste work. If the solution is a tutorial, I'm not the right person.",
+];
+
+export const highlights = [
+  { title: "Medall Onboarding Live", sub: "Client channel portal · onboard.medallcorp.in", time: "Jul 2026" },
+  { title: "Metropolis SCM", sub: "Live procurement platform · scm.metropolisindia.com", time: "2024 — Present" },
+  { title: "AWS Cloud Foundations", sub: "Amazon Web Services · Certified", time: "2021" },
+  { title: "2+ Years Production", sub: "PDCloudEx · Enterprise healthcare systems", time: "Present" },
+  { title: "Agentic AI Workflows", sub: "Cursor · Faster delivery with quality", time: "2025" },
+  { title: "Test Code Costing", sub: "Metropolis Healthcare · Lab billing module", time: "2024" },
+];
 
 export const services = [
   {
@@ -221,6 +255,7 @@ export const skillGroups = [
   {
     label: "Backend",
     icon: "01",
+    color: "#10b981",
     description: "Server-side logic, APIs, and data layers powering production systems.",
     skills: [
       { name: "Python", level: "Primary" },
@@ -234,6 +269,7 @@ export const skillGroups = [
   {
     label: "Frontend",
     icon: "02",
+    color: "#a78bfa",
     description: "Responsive interfaces and dashboards built with modern web standards.",
     skills: [
       { name: "Angular", level: "Primary" },
@@ -247,6 +283,7 @@ export const skillGroups = [
   {
     label: "AI & Development",
     icon: "03",
+    color: "#f5ca40",
     description: "Agentic AI workflows to ship features faster with better quality.",
     skills: [
       { name: "Agentic AI", level: "Primary" },
@@ -259,6 +296,7 @@ export const skillGroups = [
   {
     label: "Tools & Practices",
     icon: "04",
+    color: "#22d3ee",
     description: "Version control, deployment, and team collaboration workflows.",
     skills: [
       { name: "Git", level: "Primary" },
@@ -272,6 +310,7 @@ export const skillGroups = [
   {
     label: "Domain & Platforms",
     icon: "05",
+    color: "#f97316",
     description: "Healthcare, SCM, and cloud platforms I build solutions for.",
     skills: [
       { name: "Client Onboarding Systems", level: "Primary" },
