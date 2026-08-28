@@ -1,62 +1,45 @@
-import { skillGroups, projectSkillsUsed, profile, skillProficiencies } from "../data/profile";
+import { skillGroups, profile } from "../data/profile";
 import { SectionHeader } from "./About";
-import AnimatedContent from "./reactbits/AnimatedContent";
+import ScrollReveal, { ScrollRevealGroup } from "./ScrollReveal";
 
 export default function Skills() {
   return (
-    <section id="skills" className="section-padding">
-      <div className="section-shell">
-        <SectionHeader
-          label="Skills"
-          title="Tech stack & tools"
-          subtitle="Technologies I use to design, build, and ship production software."
-        />
+    <section id="skills" className="section-shell section-padding">
+      <div className="section-rule" />
+      <SectionHeader
+        label="02 · Core capabilities"
+        title="Tech stack & systems thinking"
+        subtitle="Technologies I use to design, build, and ship production software for healthcare and enterprise platforms."
+      />
 
-        <AnimatedContent distance={24} duration={0.5}>
-          <div className="card mb-6 p-6 sm:p-8">
-            <p className="slash-label mb-4">Primary stack</p>
-            <div className="flex flex-wrap gap-2">
-              {profile.primaryStack.map((skill) => (
-                <span key={skill} className="tag-accent tag font-medium">{skill}</span>
-              ))}
-            </div>
+      <div className="skills-layout mt-12">
+        <ScrollReveal distance={28} duration={1} className="skills-rail">
+          <p className="mono-label mb-4">Primary stack</p>
+          <div className="flex flex-wrap gap-2">
+            {profile.primaryStack.map((s) => (
+              <span key={s} className="tag">{s}</span>
+            ))}
           </div>
-        </AnimatedContent>
+          <p className="mono-label mb-3 mt-8">Focus</p>
+          <p className="body-copy text-sm">Backend · Django APIs · Angular dashboards · Agentic AI workflows</p>
+        </ScrollReveal>
 
-        <AnimatedContent distance={24} duration={0.5}>
-          <div className="card mb-6 p-6 sm:p-8">
-            <p className="slash-label mb-4">Core proficiencies</p>
-            <div className="grid gap-5 sm:grid-cols-2">
-              {skillProficiencies.map((skill) => (
-                <div key={skill.name}>
-                  <div className="mb-2 flex justify-between text-sm">
-                    <span className="font-medium">{skill.name}</span>
-                    <span className="font-mono text-xs text-[var(--color-muted)]">{skill.percent}%</span>
-                  </div>
-                  <div className="h-1 overflow-hidden rounded-full bg-[var(--color-surface)]">
-                    <div className="h-full rounded-full bg-[var(--color-text)]" style={{ width: `${skill.percent}%` }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </AnimatedContent>
-
-        <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ScrollRevealGroup className="grid gap-4" stagger={0.08}>
           {skillGroups.map((group, i) => (
-            <AnimatedContent key={group.label} distance={24} duration={0.4} delay={i * 0.04}>
-              <div className="card flex h-full flex-col p-5">
-                <h3 className="display-lg mb-1 text-lg">{group.label}</h3>
-                <p className="mb-4 text-xs leading-relaxed text-[var(--color-muted)]">{group.description}</p>
-                <div className="mt-auto flex flex-wrap gap-1.5">
-                  {group.skills.map((skill) => (
-                    <span key={skill.name} className="tag text-[11px]" title={skill.level}>{skill.name}</span>
-                  ))}
-                </div>
+            <article key={group.label} className="glass-panel p-5 sm:p-6">
+              <div className="mb-3 flex items-baseline justify-between gap-4">
+                <h3 className="font-medium text-[var(--color-text)]">{group.label}</h3>
+                <span className="mono-label">{group.icon}</span>
               </div>
-            </AnimatedContent>
+              <p className="mb-4 text-sm leading-relaxed text-[var(--color-muted)]">{group.description}</p>
+              <div className="flex flex-wrap gap-1.5">
+                {group.skills.map((skill) => (
+                  <span key={skill.name} className="tag">{skill.name}</span>
+                ))}
+              </div>
+            </article>
           ))}
-        </div>
+        </ScrollRevealGroup>
       </div>
     </section>
   );
