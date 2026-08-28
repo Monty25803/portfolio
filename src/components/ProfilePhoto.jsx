@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { profile } from "../data/profile";
 
-const crop = {
+const sizes = {
   hero: {
     ring: "h-44 w-44 sm:h-52 sm:w-52 lg:h-56 lg:w-56",
     style: {
@@ -13,7 +13,7 @@ const crop = {
     role: "text-xs",
   },
   sidebar: {
-    ring: "h-32 w-32 sm:h-36 sm:w-36",
+    ring: "h-36 w-36 sm:h-40 sm:w-40",
     style: {
       objectPosition: "50% 26%",
       transform: "scale(1.32)",
@@ -26,25 +26,20 @@ const crop = {
 
 export default function ProfilePhoto({ className = "", variant = "hero", showCaption = true }) {
   const [sourceIndex, setSourceIndex] = useState(0);
-  const config = crop[variant] || crop.hero;
-
+  const config = sizes[variant] || sizes.hero;
   const sources = [profile.photo, profile.photoFallback].filter(Boolean);
 
   const handleError = () => {
-    if (sourceIndex < sources.length - 1) {
-      setSourceIndex((i) => i + 1);
-    } else {
-      setSourceIndex(sources.length);
-    }
+    if (sourceIndex < sources.length - 1) setSourceIndex((i) => i + 1);
+    else setSourceIndex(sources.length);
   };
 
   const showInitials = sourceIndex >= sources.length;
 
   return (
     <div className={`relative mx-auto ${className}`}>
-      <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-[var(--color-accent)]/40 to-transparent blur-md" />
       <div
-        className={`relative mx-auto overflow-hidden rounded-full border-2 border-[var(--color-accent)] bg-[var(--color-surface-card)] ${config.ring}`}
+        className={`relative mx-auto overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-lg ${config.ring}`}
       >
         {!showInitials ? (
           <img
@@ -56,16 +51,14 @@ export default function ProfilePhoto({ className = "", variant = "hero", showCap
             onError={handleError}
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-[var(--color-surface-raised)]">
-            <span className="text-2xl font-bold text-[var(--color-accent)] sm:text-3xl">DPM</span>
+          <div className="flex h-full w-full items-center justify-center bg-[var(--color-surface-alt)]">
+            <span className="font-serif text-3xl font-semibold text-[var(--color-text)]">DPM</span>
           </div>
         )}
       </div>
       {showCaption && (
         <>
-          <p className={`mt-4 text-center font-medium text-[var(--color-text)] ${config.name}`}>
-            {profile.name}
-          </p>
+          <p className={`mt-4 text-center font-medium ${config.name}`}>{profile.name}</p>
           <p className={`text-center text-[var(--color-muted)] ${config.role}`}>{profile.title}</p>
         </>
       )}

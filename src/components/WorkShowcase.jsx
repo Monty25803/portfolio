@@ -2,39 +2,34 @@ import { projects } from "../data/profile";
 import { BracketLabel, SectionLink } from "./ui/SectionLabels";
 import AnimatedContent from "./reactbits/AnimatedContent";
 
-const statusStyles = {
-  Ongoing: "border-[var(--color-accent)]/40 bg-[var(--color-accent)]/10 text-[var(--color-accent)]",
-  Completed: "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-muted)]",
-};
-
 export default function WorkShowcase() {
   const featured = projects.find((p) => p.featured) || projects[0];
-  const others = projects.filter((p) => p.id !== featured?.id).sort((a, b) => (a.number || "").localeCompare(b.number || ""));
+  const others = projects.filter((p) => p.id !== featured?.id);
 
   return (
-    <div className="mb-16 sm:mb-20">
-      <AnimatedContent distance={40} duration={0.6}>
-        <BracketLabel className="mb-4">Selected case studies</BracketLabel>
-        <div className="mb-10 flex flex-col gap-4 sm:mb-14 sm:flex-row sm:items-end sm:justify-between">
-          <h2 className="editorial-title max-w-3xl text-2xl font-bold leading-tight tracking-tight sm:text-3xl lg:text-4xl">
-            Backend systems, healthcare platforms, and production software — from vision to deployment.
+    <div>
+      <AnimatedContent distance={32} duration={0.5}>
+        <BracketLabel>Selected case studies</BracketLabel>
+        <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <h2 className="heading-lg max-w-3xl text-3xl font-semibold sm:text-4xl">
+            Backend systems and production platforms — from architecture to deployment.
           </h2>
-          <a href="#github" className="text-sm text-[var(--color-accent)] hover:underline">
-            All GitHub repos →
+          <a href="#github" className="link-arrow shrink-0">
+            All repositories
           </a>
         </div>
       </AnimatedContent>
 
       {featured && (
-        <AnimatedContent distance={50} duration={0.7}>
-          <FeaturedCaseStudy project={featured} />
+        <AnimatedContent distance={40} duration={0.6}>
+          <FeaturedCase project={featured} />
         </AnimatedContent>
       )}
 
-      <div className="mt-4 divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
+      <div className="mt-2">
         {others.map((project, i) => (
-          <AnimatedContent key={project.id} distance={40} duration={0.6} delay={i * 0.06}>
-            <CompactCaseStudy project={project} />
+          <AnimatedContent key={project.id} distance={32} duration={0.5} delay={i * 0.05}>
+            <CompactCase project={project} />
           </AnimatedContent>
         ))}
       </div>
@@ -42,56 +37,45 @@ export default function WorkShowcase() {
   );
 }
 
-function FeaturedCaseStudy({ project }) {
+function FeaturedCase({ project }) {
   return (
-    <article className="work-featured group">
+    <article className="mb-8 pb-8">
       <div className="mb-4 flex flex-wrap items-center gap-2">
-        <span className="font-mono text-3xl font-bold text-[var(--color-border)] sm:text-4xl">
-          {project.number}
-        </span>
-        {project.badge && (
-          <span className="rounded-sm border border-[var(--color-accent)]/40 bg-[var(--color-accent)]/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-accent)] sm:text-xs">
-            {project.badge}
-          </span>
-        )}
-        <span
-          className={`rounded-sm border px-2.5 py-0.5 text-[10px] font-medium sm:text-xs ${statusStyles[project.status]}`}
-        >
-          {project.status}
-        </span>
+        <span className="font-mono text-sm text-[var(--color-muted)]">{project.number}</span>
+        {project.badge && <span className="tag-accent tag">{project.badge}</span>}
+        <span className="tag">{project.status}</span>
       </div>
 
-      <h3 className="mb-2 text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">{project.title}</h3>
+      <h3 className="heading-lg mb-2 text-2xl font-semibold sm:text-3xl">{project.title}</h3>
       <p className="mb-5 text-sm text-[var(--color-muted)]">
         {project.client} · {project.role} · {project.period}
       </p>
-
-      <p className="mb-8 max-w-3xl text-base leading-relaxed text-[var(--color-text)]/90 sm:text-lg">
+      <p className="mb-8 max-w-3xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
         {project.overview}
       </p>
 
       {project.metrics && (
-        <div className="mb-8 grid grid-cols-3 gap-3 sm:max-w-xl">
+        <div className="mb-8 grid grid-cols-3 gap-3 sm:max-w-lg">
           {project.metrics.map((m) => (
-            <div key={m.label} className="metric-cell px-2 py-3 text-center sm:px-4">
-              <p className="text-xl font-bold text-[var(--color-accent)] sm:text-2xl">{m.value}</p>
-              <p className="text-[10px] leading-tight text-[var(--color-muted)] sm:text-xs">{m.label}</p>
+            <div key={m.label} className="metric-box">
+              <p className="text-xl font-semibold text-[var(--color-highlight)]">{m.value}</p>
+              <p className="mt-1 text-[11px] text-[var(--color-muted)]">{m.label}</p>
             </div>
           ))}
         </div>
       )}
 
       <div className="mb-6 flex flex-wrap gap-2">
-        {project.techStack.slice(0, 5).map((tech) => (
-          <span key={tech} className="tag-chip">
-            {tech}
+        {project.techStack.slice(0, 5).map((t) => (
+          <span key={t} className="tag">
+            {t}
           </span>
         ))}
       </div>
 
       <div className="flex flex-wrap gap-5">
         {project.url && <SectionLink href={project.url}>View live platform</SectionLink>}
-        {project.githubUrl && <SectionLink href={project.githubUrl}>View on GitHub</SectionLink>}
+        {project.githubUrl && <SectionLink href={project.githubUrl}>GitHub</SectionLink>}
         <a href={`#case-${project.id}`} className="text-sm text-[var(--color-muted)] hover:text-[var(--color-text)]">
           Full case study ↓
         </a>
@@ -100,63 +84,34 @@ function FeaturedCaseStudy({ project }) {
   );
 }
 
-function CompactCaseStudy({ project }) {
+function CompactCase({ project }) {
   return (
-    <article className="work-row group py-6 sm:py-8">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-        <div className="flex min-w-0 gap-4 sm:gap-6">
-          <span className="font-mono text-2xl font-bold text-[var(--color-border)] sm:text-3xl">
-            {project.number}
-          </span>
-          <div className="min-w-0">
-            <div className="mb-2 flex flex-wrap items-center gap-2">
-              <span
-                className={`rounded-sm border px-2 py-0.5 text-[10px] font-medium ${statusStyles[project.status]}`}
-              >
-                {project.status}
-              </span>
-            </div>
-            <h3 className="mb-1 text-lg font-bold tracking-tight transition group-hover:text-[var(--color-accent)] sm:text-xl">
-              {project.title}
-            </h3>
-            <p className="text-sm text-[var(--color-muted)]">
-              {project.client} · {project.period}
-            </p>
-            <p className="mt-3 line-clamp-2 max-w-2xl text-sm leading-relaxed text-[var(--color-muted)]">
-              {project.overview}
-            </p>
-          </div>
+    <article className="work-divider grid gap-4 py-8 sm:grid-cols-[auto_1fr_auto] sm:items-start sm:gap-8">
+      <span className="font-mono text-lg text-[var(--color-muted)]">{project.number}</span>
+      <div>
+        <h3 className="mb-1 text-lg font-semibold sm:text-xl">{project.title}</h3>
+        <p className="mb-2 text-sm text-[var(--color-muted)]">
+          {project.client} · {project.period}
+        </p>
+        <p className="line-clamp-2 text-sm leading-relaxed text-[var(--color-muted)]">{project.overview}</p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {project.techStack.slice(0, 3).map((t) => (
+            <span key={t} className="tag text-[11px]">
+              {t}
+            </span>
+          ))}
         </div>
-
-        <div className="flex flex-col gap-4 lg:items-end lg:text-right">
-          {project.metrics && (
-            <div className="flex flex-wrap gap-4 lg:justify-end">
-              {project.metrics.slice(0, 2).map((m) => (
-                <div key={m.label}>
-                  <p className="text-lg font-bold text-[var(--color-accent)]">{m.value}</p>
-                  <p className="text-[10px] text-[var(--color-muted)]">{m.label}</p>
-                </div>
-              ))}
-            </div>
-          )}
-          <div className="flex flex-wrap gap-2 lg:justify-end">
-            {project.techStack.slice(0, 3).map((tech) => (
-              <span key={tech} className="tag-chip text-[10px]">
-                {tech}
-              </span>
-            ))}
+      </div>
+      <div className="flex flex-col items-start gap-2 sm:items-end">
+        {project.metrics?.slice(0, 1).map((m) => (
+          <div key={m.label} className="text-right">
+            <p className="font-semibold text-[var(--color-highlight)]">{m.value}</p>
+            <p className="text-[11px] text-[var(--color-muted)]">{m.label}</p>
           </div>
-          <div className="flex flex-wrap gap-4">
-            {project.url && (
-              <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-sm text-[var(--color-accent)] hover:underline">
-                Live ↗
-              </a>
-            )}
-            <a href={`#case-${project.id}`} className="text-sm text-[var(--color-muted)] hover:text-[var(--color-text)]">
-              Case study ↓
-            </a>
-          </div>
-        </div>
+        ))}
+        <a href={`#case-${project.id}`} className="link-arrow text-sm">
+          Case study
+        </a>
       </div>
     </article>
   );

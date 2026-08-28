@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { profile } from "../data/profile";
 
 const navLinks = [
-  { href: "#projects", label: "Work" },
+  { href: "#work", label: "Work" },
   { href: "#about", label: "About" },
   { href: "#journey", label: "Journey" },
   { href: "#github", label: "GitHub" },
@@ -14,7 +14,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -28,20 +28,19 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
         scrolled || open
-          ? "border-b border-[var(--color-border)] bg-[var(--color-surface)]/95 backdrop-blur-md"
-          : "bg-transparent"
+          ? "nav-blur border-[var(--color-border)]"
+          : "border-transparent bg-transparent"
       }`}
     >
       <nav className="section-shell flex items-center justify-between py-4">
         <a
           href="#home"
-          className="font-mono text-sm font-medium tracking-tight text-[var(--color-text)] transition hover:text-[var(--color-accent)]"
+          className="font-serif text-lg font-semibold text-[var(--color-text)]"
           onClick={() => setOpen(false)}
         >
-          {profile.givenName.split(" ")[0]}
-          <span className="text-[var(--color-accent)]">{profile.familyName}</span>
+          DPM
         </a>
 
         <ul className="hidden items-center gap-8 md:flex">
@@ -49,7 +48,7 @@ export default function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)]"
+                className="text-sm text-[var(--color-muted)] transition hover:text-[var(--color-text)]"
               >
                 {link.label}
               </a>
@@ -57,52 +56,49 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <a href={profile.github} target="_blank" rel="noopener noreferrer" className="btn-outline px-4 py-2 text-sm">
-            GitHub
-          </a>
-          <a
-            href={profile.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary px-4 py-2 text-sm"
-          >
-            LinkedIn
-          </a>
-        </div>
+        <a
+          href={profile.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary hidden px-5 py-2 text-sm md:inline-flex"
+        >
+          LinkedIn
+        </a>
 
         <button
           type="button"
-          className="flex flex-col gap-1.5 p-1 md:hidden"
+          className="p-2 md:hidden"
           aria-label="Toggle menu"
           aria-expanded={open}
           onClick={() => setOpen(!open)}
         >
-          <span className={`block h-0.5 w-6 bg-[var(--color-text)] transition ${open ? "translate-y-2 rotate-45" : ""}`} />
-          <span className={`block h-0.5 w-6 bg-[var(--color-text)] transition ${open ? "opacity-0" : ""}`} />
-          <span className={`block h-0.5 w-6 bg-[var(--color-text)] transition ${open ? "-translate-y-2 -rotate-45" : ""}`} />
+          <span className={`block h-0.5 w-5 bg-[var(--color-text)] transition ${open ? "translate-y-1.5 rotate-45" : ""}`} />
+          <span className={`my-1 block h-0.5 w-5 bg-[var(--color-text)] transition ${open ? "opacity-0" : ""}`} />
+          <span className={`block h-0.5 w-5 bg-[var(--color-text)] transition ${open ? "-translate-y-1.5 -rotate-45" : ""}`} />
         </button>
       </nav>
 
       {open && (
-        <div className="border-t border-[var(--color-border)] bg-[var(--color-surface-raised)] md:hidden">
-          <ul className="section-shell flex flex-col gap-4 py-4">
+        <div className="border-t border-[var(--color-border)] bg-[var(--color-surface)] md:hidden">
+          <ul className="section-shell flex flex-col gap-4 py-5">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="block py-1 text-[var(--color-muted)] hover:text-[var(--color-accent)]"
+                  className="block text-[var(--color-text)]"
                   onClick={() => setOpen(false)}
                 >
                   {link.label}
                 </a>
               </li>
             ))}
-            <li className="flex gap-3 pt-2">
-              <a href={profile.github} target="_blank" rel="noopener noreferrer" className="btn-outline flex-1 py-2 text-center text-sm">
-                GitHub
-              </a>
-              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="btn-primary flex-1 py-2 text-center text-sm">
+            <li>
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary inline-flex px-5 py-2 text-sm"
+              >
                 LinkedIn
               </a>
             </li>
