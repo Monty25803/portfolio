@@ -1,11 +1,9 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import TechMarquee from "./components/TechMarquee";
+import Projects from "./components/Projects";
 import About from "./components/About";
 import Experience from "./components/Experience";
 import Skills from "./components/Skills";
-import Projects from "./components/Projects";
-import Exploring from "./components/Exploring";
 import Resume from "./components/Resume";
 import Contact, { Footer } from "./components/Contact";
 
@@ -15,12 +13,10 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
-        <TechMarquee />
+        <Projects />
         <About />
         <Experience />
         <Skills />
-        <Projects />
-        <Exploring />
         <Resume />
         <Contact />
       </main>

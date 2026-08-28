@@ -172,6 +172,40 @@ body {
   color: var(--color-accent);
 }
 
+.editorial-title {
+  letter-spacing: -0.02em;
+}
+
+.editorial-hero {
+  letter-spacing: -0.03em;
+}
+
+.tag-chip {
+  display: inline-block;
+  border-radius: 2px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+.metric-cell {
+  border-radius: 2px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-card);
+}
+
+.work-featured {
+  padding-block: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .work-featured {
+    padding-block: 2rem;
+  }
+}
+
 .work-card,
 .release-card,
 .github-card {

@@ -2,8 +2,7 @@ import { projects, certifications, education } from "../data/profile";
 import { SectionHeader } from "./About";
 import WorkShowcase from "./WorkShowcase";
 import ClientMarquee from "./ClientMarquee";
-import Releases from "./Releases";
-import GitHubWork from "./GitHubWork";
+import GitHubLive from "./GitHubLive";
 import { BracketLabel } from "./ui/SectionLabels";
 import AnimatedContent from "./reactbits/AnimatedContent";
 import SpotlightCard from "./reactbits/SpotlightCard";
@@ -19,8 +18,7 @@ export default function Projects() {
       <div className="section-shell">
         <WorkShowcase />
         <ClientMarquee />
-        <Releases />
-        <GitHubWork />
+        <GitHubLive />
 
         <AnimatedContent distance={40} duration={0.6}>
           <BracketLabel className="mb-4">Deep dives</BracketLabel>

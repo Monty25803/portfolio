@@ -2,12 +2,10 @@ import { useState, useEffect } from "react";
 import { profile } from "../data/profile";
 
 const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#experience", label: "Experience" },
-  { href: "#skills", label: "Skills" },
   { href: "#projects", label: "Work" },
+  { href: "#about", label: "About" },
+  { href: "#journey", label: "Journey" },
   { href: "#github", label: "GitHub" },
-  { href: "#resume", label: "Resume" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -36,21 +34,22 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <nav className="section-shell flex items-center justify-between py-3 sm:py-4">
+      <nav className="section-shell flex items-center justify-between py-4">
         <a
-          href="#"
-          className="font-mono text-sm font-medium tracking-tight text-[var(--color-accent)]"
+          href="#home"
+          className="font-mono text-sm font-medium tracking-tight text-[var(--color-text)] transition hover:text-[var(--color-accent)]"
           onClick={() => setOpen(false)}
         >
-          {"<dpm />"}
+          {profile.givenName.split(" ")[0]}
+          <span className="text-[var(--color-accent)]">{profile.familyName}</span>
         </a>
 
-        <ul className="hidden items-center gap-6 lg:gap-8 md:flex">
+        <ul className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-accent)]"
+                className="text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)]"
               >
                 {link.label}
               </a>
@@ -58,14 +57,19 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <a
-          href={profile.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-outline hidden px-4 py-2 text-sm md:inline-block"
-        >
-          LinkedIn
-        </a>
+        <div className="hidden items-center gap-3 md:flex">
+          <a href={profile.github} target="_blank" rel="noopener noreferrer" className="btn-outline px-4 py-2 text-sm">
+            GitHub
+          </a>
+          <a
+            href={profile.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary px-4 py-2 text-sm"
+          >
+            LinkedIn
+          </a>
+        </div>
 
         <button
           type="button"
@@ -94,14 +98,11 @@ export default function Navbar() {
                 </a>
               </li>
             ))}
-            <li>
-              <a
-                href={profile.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block py-1 text-[var(--color-accent)]"
-                onClick={() => setOpen(false)}
-              >
+            <li className="flex gap-3 pt-2">
+              <a href={profile.github} target="_blank" rel="noopener noreferrer" className="btn-outline flex-1 py-2 text-center text-sm">
+                GitHub
+              </a>
+              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="btn-primary flex-1 py-2 text-center text-sm">
                 LinkedIn
               </a>
             </li>

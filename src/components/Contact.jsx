@@ -30,7 +30,7 @@ export default function Contact() {
               <SectionHeader
                 compact
                 label="Contact"
-                title="Let's build something great"
+                title="Let's build something that lasts"
                 subtitle="Open to remote roles, freelance projects, and collaborations — hybrid only when work-from-home is allowed."
               />
 
