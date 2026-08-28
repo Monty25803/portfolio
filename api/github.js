@@ -28,7 +28,7 @@ async function fetchAllRepos(username, token) {
   }
 
   return repos
-    .filter((r) => !r.fork && r.name !== "portfolio")
+    .filter((r) => !r.fork && r.name !== "portfolio" && !r.private)
     .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at));
 }
 
@@ -72,7 +72,6 @@ export default async function handler(req, res) {
           url: release.html_url,
           publishedAt: release.published_at,
           description: (release.body || "").slice(0, 200).replace(/\r?\n/g, " "),
-          private: repo.private,
         };
       }),
     );
@@ -91,7 +90,6 @@ export default async function handler(req, res) {
       language: r.language,
       url: r.html_url,
       homepage: r.homepage || null,
-      private: r.private,
       stars: r.stargazers_count,
       forks: r.forks_count,
       topics: r.topics || [],
@@ -104,7 +102,6 @@ export default async function handler(req, res) {
       username,
       repos,
       releases,
-      hasToken: Boolean(token),
       fetchedAt: new Date().toISOString(),
     });
   } catch (err) {

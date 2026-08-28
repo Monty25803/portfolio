@@ -10,13 +10,11 @@ export default function WorkShowcase() {
     <div>
       <AnimatedContent distance={32} duration={0.5}>
         <BracketLabel>Selected case studies</BracketLabel>
-        <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <h2 className="heading-lg max-w-3xl text-3xl font-semibold sm:text-4xl">
-            Backend systems and production platforms — from architecture to deployment.
+        <div className="mb-12 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <h2 className="heading-lg max-w-2xl text-3xl font-semibold sm:text-4xl lg:text-[2.75rem]">
+            Production systems from architecture to live deployment.
           </h2>
-          <a href="#github" className="link-arrow shrink-0">
-            All repositories
-          </a>
+          <a href="#github" className="link-arrow shrink-0">All repositories</a>
         </div>
       </AnimatedContent>
 
@@ -26,10 +24,10 @@ export default function WorkShowcase() {
         </AnimatedContent>
       )}
 
-      <div className="mt-2">
+      <div className="mt-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-4 sm:px-6">
         {others.map((project, i) => (
-          <AnimatedContent key={project.id} distance={32} duration={0.5} delay={i * 0.05}>
-            <CompactCase project={project} />
+          <AnimatedContent key={project.id} distance={24} duration={0.4} delay={i * 0.05}>
+            <CompactCase project={project} isLast={i === others.length - 1} />
           </AnimatedContent>
         ))}
       </div>
@@ -39,79 +37,70 @@ export default function WorkShowcase() {
 
 function FeaturedCase({ project }) {
   return (
-    <article className="mb-8 pb-8">
-      <div className="mb-4 flex flex-wrap items-center gap-2">
+    <article className="card-elevated mb-10 p-6 sm:p-10">
+      <div className="mb-5 flex flex-wrap items-center gap-2">
         <span className="font-mono text-sm text-[var(--color-muted)]">{project.number}</span>
         {project.badge && <span className="tag-accent tag">{project.badge}</span>}
         <span className="tag">{project.status}</span>
       </div>
 
       <h3 className="heading-lg mb-2 text-2xl font-semibold sm:text-3xl">{project.title}</h3>
-      <p className="mb-5 text-sm text-[var(--color-muted)]">
+      <p className="mb-6 text-sm text-[var(--color-muted)]">
         {project.client} · {project.role} · {project.period}
       </p>
-      <p className="mb-8 max-w-3xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
+      <p className="mb-8 max-w-2xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
         {project.overview}
       </p>
 
       {project.metrics && (
-        <div className="mb-8 grid grid-cols-3 gap-3 sm:max-w-lg">
+        <div className="mb-8 grid grid-cols-3 gap-3 sm:max-w-md">
           {project.metrics.map((m) => (
             <div key={m.label} className="metric-box">
               <p className="text-xl font-semibold text-[var(--color-highlight)]">{m.value}</p>
-              <p className="mt-1 text-[11px] text-[var(--color-muted)]">{m.label}</p>
+              <p className="mt-1 text-[11px] leading-tight text-[var(--color-muted)]">{m.label}</p>
             </div>
           ))}
         </div>
       )}
 
       <div className="mb-6 flex flex-wrap gap-2">
-        {project.techStack.slice(0, 5).map((t) => (
-          <span key={t} className="tag">
-            {t}
-          </span>
+        {project.techStack.map((t) => (
+          <span key={t} className="tag">{t}</span>
         ))}
       </div>
 
-      <div className="flex flex-wrap gap-5">
+      <div className="flex flex-wrap gap-5 border-t border-[var(--color-border)] pt-6">
         {project.url && <SectionLink href={project.url}>View live platform</SectionLink>}
         {project.githubUrl && <SectionLink href={project.githubUrl}>GitHub</SectionLink>}
         <a href={`#case-${project.id}`} className="text-sm text-[var(--color-muted)] hover:text-[var(--color-text)]">
-          Full case study ↓
+          Full breakdown ↓
         </a>
       </div>
     </article>
   );
 }
 
-function CompactCase({ project }) {
+function CompactCase({ project, isLast }) {
   return (
-    <article className="work-divider grid gap-4 py-8 sm:grid-cols-[auto_1fr_auto] sm:items-start sm:gap-8">
+    <article className={`work-row grid gap-4 py-7 transition sm:grid-cols-[3rem_1fr_auto] sm:items-center sm:gap-8 ${!isLast ? "work-divider" : ""}`}>
       <span className="font-mono text-lg text-[var(--color-muted)]">{project.number}</span>
-      <div>
+      <div className="min-w-0">
         <h3 className="mb-1 text-lg font-semibold sm:text-xl">{project.title}</h3>
-        <p className="mb-2 text-sm text-[var(--color-muted)]">
-          {project.client} · {project.period}
-        </p>
-        <p className="line-clamp-2 text-sm leading-relaxed text-[var(--color-muted)]">{project.overview}</p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {project.techStack.slice(0, 3).map((t) => (
-            <span key={t} className="tag text-[11px]">
-              {t}
-            </span>
+        <p className="mb-2 text-sm text-[var(--color-muted)]">{project.client} · {project.period}</p>
+        <div className="flex flex-wrap gap-1.5">
+          {project.techStack.slice(0, 4).map((t) => (
+            <span key={t} className="tag text-[10px]">{t}</span>
           ))}
         </div>
       </div>
-      <div className="flex flex-col items-start gap-2 sm:items-end">
-        {project.metrics?.slice(0, 1).map((m) => (
-          <div key={m.label} className="text-right">
-            <p className="font-semibold text-[var(--color-highlight)]">{m.value}</p>
-            <p className="text-[11px] text-[var(--color-muted)]">{m.label}</p>
+      <div className="flex items-center gap-4 sm:flex-col sm:items-end">
+        {project.metrics?.[0] && (
+          <div className="text-left sm:text-right">
+            <p className="font-semibold text-[var(--color-highlight)]">{project.metrics[0].value}</p>
+            <p className="text-[10px] text-[var(--color-muted)]">{project.metrics[0].label}</p>
           </div>
-        ))}
-        <a href={`#case-${project.id}`} className="link-arrow text-sm">
-          Case study
-        </a>
+        )}
+        <a href={`#case-${project.id}`} className="link-arrow text-sm whitespace-nowrap">Case study</a>
       </div>
     </article>
   );

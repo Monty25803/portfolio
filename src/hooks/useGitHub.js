@@ -11,7 +11,7 @@ async function fetchPublicFallback() {
   const raw = await res.json();
 
   const repos = raw
-    .filter((r) => !r.fork && r.name !== "portfolio")
+    .filter((r) => !r.fork && r.name !== "portfolio" && !r.private)
     .map((r) => ({
       id: r.id,
       name: r.name,
@@ -20,7 +20,6 @@ async function fetchPublicFallback() {
       language: r.language,
       url: r.html_url,
       homepage: r.homepage || null,
-      private: false,
       stars: r.stargazers_count,
       forks: r.forks_count,
       topics: r.topics || [],
@@ -33,7 +32,6 @@ async function fetchPublicFallback() {
     username: USERNAME,
     repos,
     releases: [],
-    hasToken: false,
     source: "public-fallback",
     fetchedAt: new Date().toISOString(),
   };

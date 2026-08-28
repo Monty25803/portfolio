@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { profile } from "../data/profile";
 import { useGitHub, formatRepoDate, inferCategory } from "../hooks/useGitHub";
 import { BracketLabel, SectionLink } from "./ui/SectionLabels";
-import PrivateRepoModal from "./PrivateRepoModal";
 import AnimatedContent from "./reactbits/AnimatedContent";
 
 const langColors = {
@@ -14,124 +12,112 @@ const langColors = {
 
 export default function GitHubLive() {
   const { data, loading, error, refresh } = useGitHub();
-  const [privateRepo, setPrivateRepo] = useState(null);
-
-  const openRepo = (repo) => {
-    if (repo.private) {
-      setPrivateRepo(repo);
-      return;
-    }
-    window.open(repo.homepage || repo.url, "_blank", "noopener,noreferrer");
-  };
 
   return (
-    <>
-      <section id="github" className="pb-4">
-        <AnimatedContent distance={32} duration={0.5}>
-          <BracketLabel>Live from GitHub</BracketLabel>
-          <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <h2 className="heading-lg text-3xl font-semibold sm:text-4xl">Repositories & releases</h2>
-              <p className="mt-3 max-w-xl text-[var(--color-muted)]">
-                Auto-synced from GitHub — updates when you push new repos or releases.
-                {data?.fetchedAt && (
-                  <span className="mt-1 block font-mono text-xs">
-                    Synced {new Date(data.fetchedAt).toLocaleString()}
-                  </span>
-                )}
-              </p>
-            </div>
-            <div className="flex gap-3">
-              <button type="button" onClick={refresh} className="btn-outline px-4 py-2 text-sm" disabled={loading}>
-                {loading ? "Syncing…" : "Refresh"}
-              </button>
-              <SectionLink href={profile.github}>GitHub profile</SectionLink>
-            </div>
+    <section id="github" className="pb-4">
+      <AnimatedContent distance={32} duration={0.5}>
+        <BracketLabel>Live from GitHub</BracketLabel>
+        <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="heading-lg text-3xl font-semibold sm:text-4xl">Open source & side projects</h2>
+            <p className="mt-3 max-w-xl text-[var(--color-muted)]">
+              Public repositories auto-synced from GitHub — new repos and releases appear here automatically.
+              {data?.fetchedAt && (
+                <span className="mt-1 block font-mono text-xs opacity-70">
+                  Last synced {new Date(data.fetchedAt).toLocaleString()}
+                </span>
+              )}
+            </p>
           </div>
-        </AnimatedContent>
-
-        {error && <p className="mb-6 text-sm text-[var(--color-muted)]">{error}</p>}
-
-        {data?.releases?.length > 0 && (
-          <div className="mb-12">
-            <p className="bracket-label mb-4">Recent releases</p>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {data.releases.map((release) => (
-                <ReleaseCard key={release.id} release={release} onPrivate={() => setPrivateRepo({ name: release.repoName, private: true })} />
-              ))}
-            </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <button type="button" onClick={refresh} className="btn-outline px-4 py-2 text-sm" disabled={loading}>
+              {loading ? "Syncing…" : "Refresh"}
+            </button>
+            <SectionLink href={profile.github}>View profile</SectionLink>
           </div>
-        )}
+        </div>
+      </AnimatedContent>
 
-        <p className="bracket-label mb-4">All repositories {data ? `(${data.repos.length})` : ""}</p>
+      {error && <p className="mb-6 rounded-xl bg-[var(--color-surface-alt)] px-4 py-3 text-sm text-[var(--color-muted)]">{error}</p>}
 
-        {loading && !data ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="repo-card h-36 animate-pulse bg-[var(--color-surface-alt)]" />
+      {data?.releases?.length > 0 && (
+        <div className="mb-12">
+          <p className="bracket-label mb-4">Recent releases</p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {data.releases.map((release, i) => (
+              <AnimatedContent key={release.id} distance={24} duration={0.4} delay={i * 0.04}>
+                <ReleaseCard release={release} />
+              </AnimatedContent>
             ))}
           </div>
-        ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {data?.repos.map((repo) => (
-              <RepoCard key={repo.id} repo={repo} onClick={() => openRepo(repo)} />
-            ))}
-          </div>
-        )}
+        </div>
+      )}
 
-        {data && !data.hasToken && (
-          <p className="mt-6 text-xs text-[var(--color-muted)]">
-            Public repos only. Add <code className="font-mono">GITHUB_TOKEN</code> on Vercel to show private repos.
-          </p>
-        )}
-      </section>
+      <p className="bracket-label mb-4">
+        Public repositories {data ? `(${data.repos.length})` : ""}
+      </p>
 
-      <PrivateRepoModal repo={privateRepo} onClose={() => setPrivateRepo(null)} />
-    </>
+      {loading && !data ? (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="skeleton-card h-40" />
+          ))}
+        </div>
+      ) : data?.repos.length === 0 ? (
+        <p className="text-sm text-[var(--color-muted)]">No public repositories found.</p>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {data?.repos.map((repo, i) => (
+            <AnimatedContent key={repo.id} distance={24} duration={0.4} delay={i * 0.03}>
+              <RepoCard repo={repo} />
+            </AnimatedContent>
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
 
-function ReleaseCard({ release, onPrivate }) {
-  const handleClick = () => {
-    if (release.private) onPrivate();
-    else window.open(release.url, "_blank", "noopener,noreferrer");
-  };
-
+function ReleaseCard({ release }) {
   return (
-    <button type="button" onClick={handleClick} className="release-card w-full p-5 text-left">
-      <div className="mb-2 flex justify-between gap-2">
-        <span className="font-mono text-xs text-[var(--color-highlight)]">{release.tag}</span>
-        {release.private && <span className="tag text-[10px]">Private</span>}
-      </div>
-      <h3 className="font-semibold">{release.name}</h3>
+    <a
+      href={release.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="release-card group block p-5 sm:p-6"
+    >
+      <span className="font-mono text-xs font-medium text-[var(--color-highlight)]">{release.tag}</span>
+      <h3 className="mt-2 font-semibold transition group-hover:text-[var(--color-highlight)]">{release.name}</h3>
       <p className="mt-1 text-xs text-[var(--color-muted)]">{release.repo}</p>
       {release.description && (
-        <p className="mt-3 line-clamp-2 text-sm text-[var(--color-muted)]">{release.description}</p>
+        <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-[var(--color-muted)]">{release.description}</p>
       )}
-      <p className="mt-3 text-xs text-[var(--color-muted)]">{formatRepoDate(release.publishedAt)}</p>
-    </button>
+      <p className="mt-4 text-xs text-[var(--color-muted)]">{formatRepoDate(release.publishedAt)}</p>
+    </a>
   );
 }
 
-function RepoCard({ repo, onClick }) {
+function RepoCard({ repo }) {
   const langColor = langColors[repo.language] || "var(--color-muted)";
 
   return (
-    <button type="button" onClick={onClick} className="repo-card w-full p-5 text-left">
-      <div className="mb-3 flex justify-between gap-2">
+    <a
+      href={repo.homepage || repo.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="repo-card group flex h-full flex-col p-5 sm:p-6"
+    >
+      <div className="mb-3 flex items-start justify-between gap-2">
         <span className="tag text-[10px]">{inferCategory(repo)}</span>
-        <div className="flex gap-1">
-          {repo.private && <span className="tag text-[10px]">Private</span>}
-          {repo.latestRelease && (
-            <span className="tag-accent tag text-[10px]">{repo.latestRelease.tag}</span>
-          )}
-        </div>
+        {repo.latestRelease && (
+          <span className="tag-accent tag text-[10px]">{repo.latestRelease.tag}</span>
+        )}
       </div>
-      <h3 className="font-semibold">{repo.name}</h3>
-      <p className="mt-2 line-clamp-2 text-sm text-[var(--color-muted)]">
-        {repo.description || "No description"}
+      <h3 className="font-semibold transition group-hover:text-[var(--color-highlight)]">{repo.name}</h3>
+      <p className="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-[var(--color-muted)]">
+        {repo.description || "No description provided."}
       </p>
-      <div className="mt-4 flex items-center justify-between text-xs text-[var(--color-muted)]">
+      <div className="mt-4 flex items-center justify-between border-t border-[var(--color-border)] pt-3 text-xs text-[var(--color-muted)]">
         <span className="flex items-center gap-2">
           {repo.language && (
             <>
@@ -139,9 +125,10 @@ function RepoCard({ repo, onClick }) {
               {repo.language}
             </>
           )}
+          {repo.stars > 0 && <span>· ★ {repo.stars}</span>}
         </span>
-        <span>{repo.private ? "Not accessible" : "Open ↗"}</span>
+        <span className="opacity-0 transition group-hover:opacity-100">Open ↗</span>
       </div>
-    </button>
+    </a>
   );
 }
