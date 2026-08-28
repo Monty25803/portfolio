@@ -11,7 +11,7 @@ export const profile = {
   github: "https://github.com/Monty25803",
   githubOrg: "Devi-s-Repo",
   photo: "/profile.png",
-  photoFallback: "https://unavatar.io/linkedin/devi-prasana-mishra-606064bb",
+  photoFallback: "https://github.com/Monty25803.png",
   company: "PDCloudEx",
   experienceYears: "2+ years",
   openToWork: true,
