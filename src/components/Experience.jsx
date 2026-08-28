@@ -1,20 +1,20 @@
 import { experience, profile } from "../data/profile";
-import AnimatedContent from "./reactbits/AnimatedContent";
+import ScrollReveal from "./ScrollReveal";
 
 export default function Experience() {
   return (
     <section id="journey" className="section-padding section-alt">
       <div className="section-shell">
-        <AnimatedContent distance={28} duration={0.5}>
+        <ScrollReveal distance={36} duration={1}>
           <h2 className="display-lg mb-3 text-4xl sm:text-5xl">My journey</h2>
           <p className="mb-12 max-w-2xl text-[var(--color-muted)]">
             {profile.experienceYears} at {profile.company} — backend development, healthcare systems, and enterprise platforms.
           </p>
-        </AnimatedContent>
+        </ScrollReveal>
 
         <div className="space-y-6">
           {experience.map((job, i) => (
-            <AnimatedContent key={`${job.role}-${job.period}`} distance={24} duration={0.4} delay={i * 0.06}>
+            <ScrollReveal key={`${job.role}-${job.period}`} distance={32} duration={1} delay={i * 0.08}>
               <article className="card p-6 sm:p-8">
                 <div className="mb-4 flex flex-wrap items-start justify-between gap-4">
                   <div>
@@ -33,7 +33,7 @@ export default function Experience() {
                   ))}
                 </ul>
               </article>
-            </AnimatedContent>
+            </ScrollReveal>
           ))}
         </div>
       </div>

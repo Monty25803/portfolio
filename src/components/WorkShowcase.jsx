@@ -1,42 +1,40 @@
 import { projects } from "../data/profile";
-import AnimatedContent from "./reactbits/AnimatedContent";
+import ProjectScreenshot from "./ProjectScreenshot";
+import ScrollReveal, { ScrollRevealGroup } from "./ScrollReveal";
 
 export default function WorkShowcase() {
   const featured = projects.filter((p) => p.featured).slice(0, 4);
 
   return (
     <div>
-      <AnimatedContent distance={28} duration={0.5}>
+      <ScrollReveal distance={36} duration={1}>
         <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <h2 className="display-lg text-4xl sm:text-5xl">Featured Projects</h2>
           <a href="#github" className="link-arrow shrink-0">View all work</a>
         </div>
-      </AnimatedContent>
+      </ScrollReveal>
 
-      <div className="grid gap-6 sm:grid-cols-2">
-        {featured.map((project, i) => (
-          <AnimatedContent key={project.id} distance={24} duration={0.4} delay={i * 0.05}>
-            <ProjectCard project={project} />
-          </AnimatedContent>
+      <ScrollRevealGroup className="grid gap-8 sm:grid-cols-2" stagger={0.12}>
+        {featured.map((project) => (
+          <ProjectCard key={project.id} project={project} />
         ))}
-      </div>
+      </ScrollRevealGroup>
     </div>
   );
 }
 
 function ProjectCard({ project }) {
-  const initials = project.title
-    .split(" ")
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("");
-
   return (
-    <article className="card group p-4 sm:p-5">
-      <div className="project-card-visual">
-        <span>{initials}</span>
-      </div>
-      <div className="px-1">
+    <article className="card group overflow-hidden p-0">
+      <a
+        href={project.url || `#case-${project.id}`}
+        target={project.url ? "_blank" : undefined}
+        rel={project.url ? "noopener noreferrer" : undefined}
+        className="block"
+      >
+        <ProjectScreenshot project={project} className="rounded-t-[calc(1.25rem-1px)]" />
+      </a>
+      <div className="p-5 sm:p-6">
         <div className="mb-2 flex flex-wrap gap-2">
           {project.badge && <span className="tag-accent tag text-[10px]">{project.badge}</span>}
           <span className="tag text-[10px]">{project.status}</span>

@@ -1,30 +1,28 @@
 import { services } from "../data/profile";
-import AnimatedContent from "./reactbits/AnimatedContent";
+import ScrollReveal, { ScrollRevealGroup } from "./ScrollReveal";
 
 export default function Services() {
   return (
     <section id="services" className="section-padding section-alt">
       <div className="section-shell">
-        <AnimatedContent distance={28} duration={0.5}>
+        <ScrollReveal distance={36} duration={1}>
           <h2 className="display-lg mb-12 text-4xl sm:text-5xl">Services</h2>
-        </AnimatedContent>
+        </ScrollReveal>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          {services.map((service, i) => (
-            <AnimatedContent key={service.title} distance={24} duration={0.4} delay={i * 0.05}>
-              <article className="service-card h-full">
-                <h3 className="display-lg mb-5 text-xl sm:text-2xl">{service.title}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {service.tags.map((tag) => (
-                    <span key={tag} className="tag">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            </AnimatedContent>
+        <ScrollRevealGroup className="grid gap-4 sm:grid-cols-2" stagger={0.1}>
+          {services.map((service) => (
+            <article key={service.title} className="service-card h-full">
+              <h3 className="display-lg mb-5 text-xl sm:text-2xl">{service.title}</h3>
+              <div className="flex flex-wrap gap-2">
+                {service.tags.map((tag) => (
+                  <span key={tag} className="tag">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </article>
           ))}
-        </div>
+        </ScrollRevealGroup>
       </div>
     </section>
   );

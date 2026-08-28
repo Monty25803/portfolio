@@ -3,14 +3,26 @@ import { profile } from "../data/profile";
 
 const variants = {
   heroFront: {
-    style: { objectPosition: "50% 22%", transform: "scale(1.35)", transformOrigin: "50% 20%" },
+    style: {
+      objectPosition: "50% 16%",
+      transform: "scale(1.48)",
+      transformOrigin: "50% 14%",
+    },
   },
   heroBack: {
-    style: { objectPosition: "50% 35%", transform: "scale(1.2)", transformOrigin: "50% 30%" },
+    style: {
+      objectPosition: "42% 38%",
+      transform: "scale(1.28)",
+      transformOrigin: "42% 32%",
+    },
   },
   sidebar: {
     ring: "h-32 w-32 sm:h-36 sm:w-36 rounded-2xl",
-    style: { objectPosition: "50% 26%", transform: "scale(1.32)", transformOrigin: "50% 24%" },
+    style: {
+      objectPosition: "50% 20%",
+      transform: "scale(1.38)",
+      transformOrigin: "50% 18%",
+    },
     name: "text-xs",
     role: "text-[11px]",
   },
@@ -35,10 +47,11 @@ export default function ProfilePhoto({ className = "", variant = "heroFront", sh
         {!showInitials ? (
           <img
             src={sources[sourceIndex]}
-            alt={profile.name}
+            alt={variant === "heroBack" ? `${profile.name} — back view` : `${profile.name} — front view`}
             className="h-full w-full object-cover"
             style={config.style}
             loading="eager"
+            decoding="async"
             onError={handleError}
           />
         ) : (

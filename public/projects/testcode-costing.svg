@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="875" viewBox="0 0 1400 875" fill="none">
+  <rect width="1400" height="875" fill="#faf5ff"/>
+  <rect width="1400" height="48" fill="#f3e8ff"/>
+  <circle cx="28" cy="24" r="7" fill="#ff5f57"/>
+  <circle cx="52" cy="24" r="7" fill="#febc2e"/>
+  <circle cx="76" cy="24" r="7" fill="#28c840"/>
+  <rect x="120" y="14" width="400" height="20" rx="10" fill="#e9d5ff"/>
+  <rect width="220" height="875" y="48" fill="#5b21b6"/>
+  <rect x="32" y="80" width="130" height="14" rx="4" fill="#c4b5fd"/>
+  <rect x="32" y="130" width="156" height="10" rx="3" fill="#fff" opacity="0.35"/>
+  <rect x="32" y="160" width="140" height="10" rx="3" fill="#fff" opacity="0.2"/>
+  <text x="260" y="110" fill="#3b0764" font-family="Arial,sans-serif" font-size="32" font-weight="700">Test Code Costing</text>
+  <text x="260" y="142" fill="#7c6b94" font-family="Arial,sans-serif" font-size="18">Metropolis Healthcare · Finance</text>
+  <rect x="260" y="180" width="240" height="100" rx="16" fill="#fff" stroke="#e9d5ff"/>
+  <text x="280" y="245" fill="#7c3aed" font-family="Arial,sans-serif" font-size="32" font-weight="700">35+ labs</text>
+  <rect x="520" y="180" width="240" height="100" rx="16" fill="#fff" stroke="#e9d5ff"/>
+  <text x="540" y="245" fill="#6d28d9" font-family="Arial,sans-serif" font-size="32" font-weight="700">-60% manual</text>
+  <rect x="260" y="310" width="520" height="480" rx="20" fill="#fff" stroke="#e9d5ff"/>
+  <rect x="290" y="340" width="200" height="14" rx="4" fill="#c4b5fd"/>
+  <rect x="290" y="390" width="460" height="12" rx="4" fill="#f3e8ff"/>
+  <rect x="290" y="420" width="460" height="12" rx="4" fill="#ede9fe"/>
+  <rect x="290" y="450" width="460" height="12" rx="4" fill="#f3e8ff"/>
+  <rect x="290" y="480" width="460" height="12" rx="4" fill="#ede9fe"/>
+  <rect x="800" y="310" width="540" height="480" rx="20" fill="#fff" stroke="#e9d5ff"/>
+  <path d="M830 680 L880 560 L930 600 L980 480 L1030 520 L1080 420 L1130 460 L1280 380" stroke="#7c3aed" stroke-width="4" fill="none"/>
+  <circle cx="880" cy="560" r="6" fill="#7c3aed"/>
+  <circle cx="980" cy="480" r="6" fill="#7c3aed"/>
+  <circle cx="1080" cy="420" r="6" fill="#7c3aed"/>
+</svg>

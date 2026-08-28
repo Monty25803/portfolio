@@ -331,6 +331,7 @@ export const projects = [
     period: "June 2026 — July 2026",
     status: "Completed",
     featured: true,
+    image: "/projects/medall-client-onboarding.svg",
     url: "https://onboard.medallcorp.in/dashboard",
     githubUrl: "https://github.com/Monty25803/Client-Onboarding",
     metrics: [
@@ -382,6 +383,7 @@ export const projects = [
     period: "2024 — Present",
     status: "Ongoing",
     featured: true,
+    image: "/projects/metropolis-scm.svg",
     url: "https://scm.metropolisindia.com/",
     githubUrl: "https://github.com/Monty25803/Metropolis_Procurement_System",
     metrics: [
@@ -431,7 +433,8 @@ export const projects = [
     role: "Backend Developer",
     period: "2024",
     status: "Completed",
-    featured: false,
+    featured: true,
+    image: "/projects/testcode-costing.svg",
     metrics: [
       { value: "35+", label: "Lab hubs integrated" },
       { value: "60%", label: "Less manual consolidation" },

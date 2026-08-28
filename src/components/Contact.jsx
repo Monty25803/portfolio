@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { profile } from "../data/profile";
-import AnimatedContent from "./reactbits/AnimatedContent";
+import ScrollReveal from "./ScrollReveal";
 
 export default function Contact() {
   const [sent, setSent] = useState(false);
@@ -20,14 +20,14 @@ export default function Contact() {
   return (
     <section id="contact" className="section-padding section-alt">
       <div className="section-shell max-w-2xl">
-        <AnimatedContent distance={28} duration={0.5}>
+        <ScrollReveal distance={36} duration={1}>
           <h2 className="display-lg mb-3 text-4xl sm:text-5xl">Let&apos;s talk.</h2>
           <p className="mb-10 text-[var(--color-muted)]">
             Have a project or need help? Fill out the form, and I&apos;ll get back to you soon.
           </p>
-        </AnimatedContent>
+        </ScrollReveal>
 
-        <AnimatedContent distance={28} duration={0.5} delay={0.05}>
+        <ScrollReveal distance={32} duration={1} delay={0.1}>
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label htmlFor="name" className="mb-2 block text-sm font-medium">Name</label>
@@ -46,7 +46,7 @@ export default function Contact() {
             </button>
             {sent && <p className="text-sm text-[var(--color-muted)]">Opening your email client…</p>}
           </form>
-        </AnimatedContent>
+        </ScrollReveal>
       </div>
     </section>
   );
