@@ -8,7 +8,7 @@ export default function Skills() {
       <div className="section-shell">
         <SectionHeader
           label="Skills"
-          title="Tech stack & tools"
+          title={<>Tech stack & <span className="gradient-text">tools</span></>}
           subtitle="Technologies I use to design, build, and ship production software."
         />
 

@@ -7,7 +7,7 @@ export default function Resume() {
     <section id="resume" className="section-padding">
       <div className="section-shell">
         <AnimatedContent distance={32} duration={0.5}>
-          <div className="card grid gap-8 p-6 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="card-featured grid gap-8 p-6 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <SectionHeader
                 compact
@@ -25,7 +25,7 @@ export default function Resume() {
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
               <a href={profile.resumeUrl} download className="btn-primary px-8 py-3 text-center">
-                Download resume
+                Download resume →
               </a>
               <a href="#contact" className="btn-outline px-8 py-3 text-center">
                 Hire me

@@ -26,57 +26,53 @@ export default function Contact() {
             <SectionHeader
               compact
               label="Contact"
-              title="Let's build something that lasts"
+              title={<>Let's build something <span className="gradient-text">great</span></>}
               subtitle="Open to remote roles, freelance projects, and collaborations."
             />
-            <div className="space-y-4 text-sm">
+            <div className="space-y-5 text-sm">
+              <ContactItem label="Email" href={`mailto:${profile.email}`} value={profile.email} />
+              <ContactItem label="Website" href={profile.website} value={profile.website.replace("https://", "")} external />
               <div>
-                <p className="text-[var(--color-muted)]">Email</p>
-                <a href={`mailto:${profile.email}`} className="link-arrow">
-                  {profile.email}
-                </a>
+                <p className="mb-1 text-xs uppercase tracking-wider text-[var(--color-muted)]">Location</p>
+                <p className="text-[var(--color-text)]">{profile.location}</p>
               </div>
               <div>
-                <p className="text-[var(--color-muted)]">Website</p>
-                <a href={profile.website} target="_blank" rel="noopener noreferrer" className="link-arrow">
-                  {profile.website.replace("https://", "")}
-                </a>
+                <p className="mb-1 text-xs uppercase tracking-wider text-[var(--color-muted)]">Availability</p>
+                <p className="text-[var(--color-text)]">{profile.availability}</p>
               </div>
-              <p className="text-[var(--color-muted)]">{profile.location}</p>
-              <p className="text-[var(--color-muted)]">{profile.availability}</p>
             </div>
             <a
               href={profile.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outline mt-8 inline-flex px-6 py-3"
+              className="btn-primary mt-8 inline-flex px-6 py-3"
             >
-              Connect on LinkedIn
+              Connect on LinkedIn →
             </a>
           </AnimatedContent>
 
           <AnimatedContent distance={32} duration={0.5} delay={0.1}>
             <form onSubmit={handleSubmit} className="card space-y-4 p-6 sm:p-8">
               <div>
-                <label htmlFor="name" className="mb-1.5 block text-sm text-[var(--color-muted)]">
+                <label htmlFor="name" className="mb-1.5 block text-xs uppercase tracking-wider text-[var(--color-muted)]">
                   Full name
                 </label>
                 <input id="name" name="name" type="text" required className="input-field" placeholder="Your name" />
               </div>
               <div>
-                <label htmlFor="email" className="mb-1.5 block text-sm text-[var(--color-muted)]">
+                <label htmlFor="email" className="mb-1.5 block text-xs uppercase tracking-wider text-[var(--color-muted)]">
                   Email
                 </label>
                 <input id="email" name="email" type="email" required className="input-field" placeholder="you@email.com" />
               </div>
               <div>
-                <label htmlFor="message" className="mb-1.5 block text-sm text-[var(--color-muted)]">
+                <label htmlFor="message" className="mb-1.5 block text-xs uppercase tracking-wider text-[var(--color-muted)]">
                   Message
                 </label>
                 <textarea id="message" name="message" required rows={4} className="input-field resize-y" placeholder="Tell me about the opportunity…" />
               </div>
               <button type="submit" className="btn-primary w-full px-6 py-3 sm:w-auto">
-                Send message
+                Send message →
               </button>
               {sent && <p className="text-sm text-[var(--color-highlight)]">Opening your email client…</p>}
             </form>
@@ -87,6 +83,21 @@ export default function Contact() {
   );
 }
 
+function ContactItem({ label, href, value, external }) {
+  return (
+    <div>
+      <p className="mb-1 text-xs uppercase tracking-wider text-[var(--color-muted)]">{label}</p>
+      <a
+        href={href}
+        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        className="link-arrow"
+      >
+        {value}
+      </a>
+    </div>
+  );
+}
+
 export function Footer() {
   const year = new Date().getFullYear();
   return (
@@ -94,9 +105,9 @@ export function Footer() {
       <div className="section-shell flex flex-col items-center justify-between gap-4 text-sm text-[var(--color-muted)] sm:flex-row">
         <p>© {year} {profile.name}</p>
         <div className="flex gap-6">
-          <a href="#home" className="hover:text-[var(--color-text)]">Top</a>
-          <a href={profile.resumeUrl} download className="hover:text-[var(--color-text)]">Resume</a>
-          <a href={profile.github} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-text)]">GitHub</a>
+          <a href="#home" className="transition hover:text-[var(--color-text)]">Top</a>
+          <a href={profile.resumeUrl} download className="transition hover:text-[var(--color-text)]">Resume</a>
+          <a href={profile.github} target="_blank" rel="noopener noreferrer" className="transition hover:text-[var(--color-text)]">GitHub</a>
         </div>
       </div>
     </footer>

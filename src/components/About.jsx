@@ -1,23 +1,21 @@
 import { profile, expertiseAreas } from "../data/profile";
 import { BracketLabel } from "./ui/SectionLabels";
 import AnimatedContent from "./reactbits/AnimatedContent";
-import ProfilePhoto from "./ProfilePhoto";
 
 export default function About() {
   return (
     <section id="about" className="section-padding section-alt">
       <div className="section-shell">
-        <div className="grid min-w-0 gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-20">
+        <div className="grid min-w-0 gap-12 lg:grid-cols-[1.3fr_0.7fr] lg:gap-16">
           <div>
             <AnimatedContent distance={32} duration={0.5}>
-              <BracketLabel>About</BracketLabel>
-              <h2 className="heading-lg mb-6 text-3xl font-semibold sm:text-4xl">
-                I build software teams can trust in production
+              <BracketLabel>About me</BracketLabel>
+              <h2 className="heading-lg mb-6 text-3xl sm:text-4xl">
+                Software that teams can <span className="gradient-text">rely on</span>
               </h2>
-              <div className="space-y-5 text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
+              <div className="space-y-5 text-base leading-relaxed text-[var(--color-muted)]">
                 <p className="text-[var(--color-text)]">{profile.summary}</p>
                 <p>{profile.philosophy}</p>
-                <p>{profile.workPreference}</p>
               </div>
             </AnimatedContent>
 
@@ -34,11 +32,12 @@ export default function About() {
 
           <AnimatedContent distance={32} duration={0.5} delay={0.1}>
             <div className="card p-6">
-              <ProfilePhoto variant="sidebar" showCaption={false} />
-              <dl className="mt-6 space-y-4 text-sm">
+              <p className="bracket-label mb-5">Quick facts</p>
+              <dl className="space-y-5">
                 <Fact label="Location" value={profile.location} />
                 <Fact label="Company" value={profile.company} />
                 <Fact label="Experience" value={profile.experienceYears} />
+                <Fact label="Availability" value="Remote · Freelance" />
                 <Fact label="Website" value={profile.website.replace("https://", "")} />
               </dl>
             </div>
@@ -46,10 +45,10 @@ export default function About() {
         </div>
 
         <AnimatedContent distance={32} duration={0.5}>
-          <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {expertiseAreas.map((area) => (
-              <div key={area.title} className="card p-5">
-                <h3 className="mb-2 font-semibold">{area.title}</h3>
+              <div key={area.title} className="card-glow p-5">
+                <h3 className="mb-2 font-semibold text-[var(--color-text)]">{area.title}</h3>
                 <p className="text-sm leading-relaxed text-[var(--color-muted)]">{area.description}</p>
               </div>
             ))}
@@ -62,8 +61,8 @@ export default function About() {
 
 function Fact({ label, value }) {
   return (
-    <div>
-      <dt className="text-[var(--color-muted)]">{label}</dt>
+    <div className="border-b border-[var(--color-border)] pb-4 last:border-0 last:pb-0">
+      <dt className="mb-1 text-xs uppercase tracking-wider text-[var(--color-muted)]">{label}</dt>
       <dd className="font-medium text-[var(--color-text)]">{value}</dd>
     </div>
   );
@@ -72,9 +71,9 @@ function Fact({ label, value }) {
 export function SectionHeader({ label, title, subtitle, compact = false }) {
   return (
     <AnimatedContent distance={32} duration={0.5}>
-      <div className={compact ? "mb-8" : "mb-10"}>
+      <div className={compact ? "mb-6" : "mb-8"}>
         {label && <BracketLabel>{label}</BracketLabel>}
-        <h2 className="heading-lg text-3xl font-semibold sm:text-4xl">{title}</h2>
+        <h2 className="heading-lg text-3xl sm:text-4xl">{title}</h2>
         {subtitle && (
           <p className="mt-3 max-w-2xl text-base text-[var(--color-muted)]">{subtitle}</p>
         )}

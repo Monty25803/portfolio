@@ -14,26 +14,26 @@ const codeLines = [
 ];
 
 const colorMap = {
-  kw: "text-[var(--color-text)]",
-  cls: "text-[var(--color-accent)]",
-  fn: "text-[var(--color-muted)]",
-  str: "text-white",
-  acc: "text-[var(--color-accent)]",
-  muted: "text-[var(--color-muted)]",
+  kw: "text-[#c678dd]",
+  cls: "text-[#61afef]",
+  fn: "text-[#61afef]",
+  str: "text-[#98c379]",
+  acc: "text-[#e5c07b]",
+  muted: "text-[#5c6370]",
 };
 
 export default function CodeCard() {
   return (
     <div className="relative w-full min-w-0 max-w-full">
-      <div className="absolute -inset-1 rounded-sm bg-gradient-to-br from-[var(--color-accent)]/20 to-transparent blur-xl" />
-      <div className="relative w-full min-w-0 overflow-hidden rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-card)]/95 shadow-2xl backdrop-blur-sm">
+      <div className="absolute -inset-px rounded-xl bg-gradient-to-br from-blue-500/20 via-violet-500/10 to-transparent blur-sm" />
+      <div className="relative w-full min-w-0 overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-card)] shadow-2xl">
         <div className="flex items-center gap-2 border-b border-[var(--color-border)] px-4 py-3">
-          <span className="h-2.5 w-2.5 flex-shrink-0 rounded-full bg-[var(--color-accent)]" />
-          <span className="h-2.5 w-2.5 flex-shrink-0 rounded-full bg-[var(--color-muted)]/40" />
-          <span className="h-2.5 w-2.5 flex-shrink-0 rounded-full bg-[var(--color-muted)]/40" />
-          <span className="ml-1 truncate font-mono text-xs text-[var(--color-muted)]">developer.py</span>
+          <span className="h-3 w-3 flex-shrink-0 rounded-full bg-red-500/80" />
+          <span className="h-3 w-3 flex-shrink-0 rounded-full bg-yellow-500/80" />
+          <span className="h-3 w-3 flex-shrink-0 rounded-full bg-green-500/80" />
+          <span className="ml-2 truncate font-mono text-xs text-[var(--color-muted)]">developer.py</span>
         </div>
-        <pre className="overflow-hidden px-4 py-4 font-mono text-[11px] leading-relaxed sm:text-xs md:text-sm">
+        <pre className="overflow-hidden px-4 py-4 font-mono text-[11px] leading-relaxed sm:text-xs">
           <code className="block whitespace-pre-wrap break-words">
             {codeLines.map((line, i) => (
               <span key={i} className="block">

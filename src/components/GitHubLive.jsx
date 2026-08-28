@@ -4,10 +4,10 @@ import { BracketLabel, SectionLink } from "./ui/SectionLabels";
 import AnimatedContent from "./reactbits/AnimatedContent";
 
 const langColors = {
-  Python: "#0f766e",
-  JavaScript: "#b45309",
-  TypeScript: "#1d4ed8",
-  "C++": "#7c3aed",
+  Python: "#3b82f6",
+  JavaScript: "#eab308",
+  TypeScript: "#60a5fa",
+  "C++": "#a78bfa",
 };
 
 export default function GitHubLive() {
@@ -19,7 +19,9 @@ export default function GitHubLive() {
         <BracketLabel>Live from GitHub</BracketLabel>
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className="heading-lg text-3xl font-semibold sm:text-4xl">Open source & side projects</h2>
+            <h2 className="heading-lg text-3xl sm:text-4xl">
+              Open source & <span className="gradient-text">side projects</span>
+            </h2>
             <p className="mt-3 max-w-xl text-[var(--color-muted)]">
               Public repositories auto-synced from GitHub — new repos and releases appear here automatically.
               {data?.fetchedAt && (
