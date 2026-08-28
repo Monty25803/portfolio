@@ -1,33 +1,26 @@
 import { useState } from "react";
 import { profile } from "../data/profile";
 
-const sizes = {
-  hero: {
-    ring: "h-40 w-40 sm:h-44 sm:w-44",
-    style: {
-      objectPosition: "50% 28%",
-      transform: "scale(1.38)",
-      transformOrigin: "50% 26%",
-    },
-    name: "text-sm",
-    role: "text-xs",
+const variants = {
+  heroFront: {
+    style: { objectPosition: "50% 22%", transform: "scale(1.35)", transformOrigin: "50% 20%" },
+  },
+  heroBack: {
+    style: { objectPosition: "50% 35%", transform: "scale(1.2)", transformOrigin: "50% 30%" },
   },
   sidebar: {
-    ring: "h-32 w-32 sm:h-36 sm:w-36",
-    style: {
-      objectPosition: "50% 26%",
-      transform: "scale(1.32)",
-      transformOrigin: "50% 24%",
-    },
+    ring: "h-32 w-32 sm:h-36 sm:w-36 rounded-2xl",
+    style: { objectPosition: "50% 26%", transform: "scale(1.32)", transformOrigin: "50% 24%" },
     name: "text-xs",
     role: "text-[11px]",
   },
 };
 
-export default function ProfilePhoto({ className = "", variant = "hero", showCaption = true }) {
+export default function ProfilePhoto({ className = "", variant = "heroFront", showCaption = true }) {
   const [sourceIndex, setSourceIndex] = useState(0);
-  const config = sizes[variant] || sizes.hero;
+  const config = variants[variant] || variants.heroFront;
   const sources = [profile.photo, profile.photoFallback].filter(Boolean);
+  const isStacked = variant === "heroFront" || variant === "heroBack";
 
   const handleError = () => {
     if (sourceIndex < sources.length - 1) setSourceIndex((i) => i + 1);
@@ -36,11 +29,9 @@ export default function ProfilePhoto({ className = "", variant = "hero", showCap
 
   const showInitials = sourceIndex >= sources.length;
 
-  return (
-    <div className={`relative ${className}`}>
-      <div
-        className={`relative overflow-hidden rounded-[calc(1.25rem-3px)] bg-[var(--color-surface)] ${config.ring}`}
-      >
+  if (isStacked) {
+    return (
+      <div className={`h-full w-full ${className}`}>
         {!showInitials ? (
           <img
             src={sources[sourceIndex]}
@@ -51,14 +42,37 @@ export default function ProfilePhoto({ className = "", variant = "hero", showCap
             onError={handleError}
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-[var(--color-surface-alt)]">
-            <span className="text-2xl font-bold gradient-text">DPM</span>
+          <div className="flex h-full w-full items-center justify-center bg-[var(--color-surface)]">
+            <span className="display-lg text-4xl">DPM</span>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className={`relative mx-auto ${className}`}>
+      <div
+        className={`relative mx-auto overflow-hidden border border-[var(--color-border)] bg-[var(--color-surface-alt)] ${config.ring}`}
+      >
+        {!showInitials ? (
+          <img
+            src={sources[sourceIndex]}
+            alt={profile.name}
+            className="h-full w-full object-cover"
+            style={config.style}
+            loading="lazy"
+            onError={handleError}
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <span className="display-lg text-2xl">DPM</span>
           </div>
         )}
       </div>
       {showCaption && (
         <>
-          <p className={`mt-4 text-center font-semibold ${config.name}`}>{profile.name}</p>
+          <p className={`mt-4 text-center font-medium ${config.name}`}>{profile.name}</p>
           <p className={`text-center text-[var(--color-muted)] ${config.role}`}>{profile.title}</p>
         </>
       )}

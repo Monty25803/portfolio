@@ -1,7 +1,9 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import Intro from "./components/Intro";
+import MarqueeStatement from "./components/MarqueeStatement";
+import Services from "./components/Services";
 import Projects from "./components/Projects";
-import About from "./components/About";
 import Experience from "./components/Experience";
 import Skills from "./components/Skills";
 import Resume from "./components/Resume";
@@ -13,8 +15,10 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
+        <Intro />
+        <MarqueeStatement />
+        <Services />
         <Projects />
-        <About />
         <Experience />
         <Skills />
         <Resume />

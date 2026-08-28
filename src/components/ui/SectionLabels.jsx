@@ -1,5 +1,5 @@
 export function BracketLabel({ children, className = "" }) {
-  return <p className={`bracket-label mb-3 ${className}`}>[ {children} ]</p>;
+  return <p className={`slash-label mb-3 ${className}`}>{children}</p>;
 }
 
 export function SectionLink({ href, children }) {

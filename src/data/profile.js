@@ -49,7 +49,29 @@ export const profile = {
     "Medall Client Channel Onboarding (completed)",
     "Metropolis Procurement System (SCM)",
   ],
+  creatingSince: "2023",
+  marqueeText:
+    "From architecture to production. Clean, scalable backend systems built to move fast, stay reliable, and perform in real-world enterprise use — driven by clarity, structured APIs, and intentional design.",
 };
+
+export const services = [
+  {
+    title: "Backend Development",
+    tags: ["Python", "Django", "REST APIs", "PostgreSQL"],
+  },
+  {
+    title: "Frontend Dashboards",
+    tags: ["Angular", "Responsive UI", "Admin Panels", "Data Viz"],
+  },
+  {
+    title: "Enterprise Systems",
+    tags: ["SCM", "Healthcare", "Onboarding", "Workflows"],
+  },
+  {
+    title: "AI-Assisted Delivery",
+    tags: ["Agentic AI", "Cursor", "Fast Shipping", "Code Quality"],
+  },
+];
 
 export const expertiseAreas = [
   {

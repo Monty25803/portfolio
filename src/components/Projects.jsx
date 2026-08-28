@@ -21,7 +21,7 @@ export default function Projects() {
         <div className="section-shell">
           <SectionHeader
             label="Deep dives"
-            title={<>Full project <span className="gradient-text">breakdown</span></>}
+            title="Full project breakdown"
             subtitle="Responsibilities, features, and impact for each system."
           />
           <div className="space-y-6">
@@ -74,7 +74,7 @@ export default function Projects() {
 
 function CaseDetail({ project }) {
   return (
-    <article id={`case-${project.id}`} className="card-glow scroll-mt-28 p-6 sm:p-8">
+    <article id={`case-${project.id}`} className="card scroll-mt-28 p-6 sm:p-8">
       <BracketLabel>{project.number} · {project.status}</BracketLabel>
       <h3 className="heading-lg mb-1 text-2xl font-semibold">{project.title}</h3>
       <p className="mb-6 text-sm text-[var(--color-muted)]">
