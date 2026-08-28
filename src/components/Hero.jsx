@@ -122,7 +122,7 @@ export default function Hero() {
           <AnimatedContent distance={30} duration={0.5} delay={0.4}>
             <div className="flex flex-wrap gap-3 sm:gap-4">
               <a href="#projects" className="btn-primary px-5 py-2.5 text-sm sm:px-6 sm:py-3">
-                View projects
+                View work
               </a>
               <a href={profile.resumeUrl} download className="btn-outline px-5 py-2.5 text-sm sm:px-6 sm:py-3">
                 Download resume

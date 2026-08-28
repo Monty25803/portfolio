@@ -171,3 +171,32 @@ body {
   border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
   color: var(--color-accent);
 }
+
+.work-card,
+.release-card,
+.github-card {
+  border-radius: 2px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-card);
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.work-card:hover,
+.release-card:hover,
+.github-card:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
+}
+
+.github-card:hover {
+  transform: translateY(-2px);
+}
+
+.work-index {
+  line-height: 1;
+  user-select: none;
+}
+
+.release-card:hover h3,
+.github-card:hover h3 {
+  transition: color 0.2s ease;
+}

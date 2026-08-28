@@ -1,5 +1,10 @@
 import { projects, certifications, education } from "../data/profile";
 import { SectionHeader } from "./About";
+import WorkShowcase from "./WorkShowcase";
+import ClientMarquee from "./ClientMarquee";
+import Releases from "./Releases";
+import GitHubWork from "./GitHubWork";
+import { BracketLabel } from "./ui/SectionLabels";
 import AnimatedContent from "./reactbits/AnimatedContent";
 import SpotlightCard from "./reactbits/SpotlightCard";
 
@@ -9,29 +14,27 @@ const statusStyles = {
 };
 
 export default function Projects() {
-  const featured = projects.filter((p) => p.featured);
-  const others = projects.filter((p) => !p.featured);
-
   return (
     <section id="projects" className="section-padding border-t border-[var(--color-border)] bg-[var(--color-surface-raised)]">
       <div className="section-shell">
-        <SectionHeader
-          label="Work"
-          title="Projects in detail"
-          subtitle="End-to-end systems I've built and maintained — from recent client onboarding to healthcare inventory platforms."
-        />
+        <WorkShowcase />
+        <ClientMarquee />
+        <Releases />
+        <GitHubWork />
 
-        <div className="mb-12 space-y-8">
-          {featured.map((project, i) => (
-            <AnimatedContent key={project.id} distance={50} duration={0.7} delay={i * 0.1}>
-              <ProjectDetailCard project={project} featured />
-            </AnimatedContent>
-          ))}
-        </div>
+        <AnimatedContent distance={40} duration={0.6}>
+          <BracketLabel className="mb-4">Deep dives</BracketLabel>
+          <SectionHeader
+            compact
+            label="Case studies"
+            title="Full project breakdown"
+            subtitle="Responsibilities, features, and impact for each production system."
+          />
+        </AnimatedContent>
 
         <div className="mb-20 space-y-8">
-          {others.map((project, i) => (
-            <AnimatedContent key={project.id} distance={50} duration={0.7} delay={i * 0.1}>
+          {projects.map((project, i) => (
+            <AnimatedContent key={project.id} distance={50} duration={0.7} delay={i * 0.08}>
               <ProjectDetailCard project={project} />
             </AnimatedContent>
           ))}
@@ -81,74 +84,36 @@ export default function Projects() {
   );
 }
 
-function ProjectDetailCard({ project, featured = false }) {
+function ProjectDetailCard({ project }) {
   return (
-    <SpotlightCard
-      className={`card p-5 sm:p-6 lg:p-8 ${
-        featured ? "border-[var(--color-accent)]/40 ring-1 ring-[var(--color-accent)]/10" : ""
-      }`}
-      spotlightColor="rgba(220, 38, 38, 0.15)"
-    >
+    <div id={`case-${project.id}`} className="scroll-mt-28">
+      <SpotlightCard
+        className="card p-5 sm:p-6 lg:p-8"
+        spotlightColor="rgba(220, 38, 38, 0.1)"
+      >
       <div className="relative min-w-0">
-        <div className="mb-5 flex flex-col gap-3 sm:mb-6">
-          <div className="min-w-0 flex-1">
-            <div className="mb-3 flex flex-wrap items-center gap-2">
-              {featured && project.status === "Ongoing" && (
-                <span className="rounded-sm border border-[var(--color-accent)]/40 bg-[var(--color-accent)]/10 px-3 py-0.5 text-xs font-semibold uppercase tracking-wide text-[var(--color-accent)]">
-                  Current Focus
-                </span>
-              )}
-              <span
-                className={`rounded-sm border px-3 py-0.5 text-xs font-medium ${statusStyles[project.status]}`}
-              >
-                {project.status}
-              </span>
-            </div>
-            <h3 className="mb-1 text-xl font-bold tracking-tight sm:text-2xl lg:text-3xl">{project.title}</h3>
-            <p className="text-sm text-[var(--color-muted)]">
-              {project.client} · {project.role} · {project.period}
-            </p>
-            {project.url && (
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 inline-flex items-center gap-1 text-sm text-[var(--color-accent)] hover:underline"
-              >
-                View live platform ↗
-              </a>
-            )}
-          </div>
+        <div className="mb-5 flex flex-wrap items-center gap-2 sm:mb-6">
+          {project.number && (
+            <span className="font-mono text-sm text-[var(--color-accent)]">{project.number}</span>
+          )}
+          <span
+            className={`rounded-sm border px-3 py-0.5 text-xs font-medium ${statusStyles[project.status]}`}
+          >
+            {project.status}
+          </span>
         </div>
 
-        <p className="mb-6 text-sm leading-relaxed text-[var(--color-text)]/90 sm:mb-8 sm:text-base">{project.overview}</p>
-
-        {project.architectureFlow && (
-          <div className="mb-6 sm:mb-8">
-            <h4 className="mb-3 font-mono text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
-              Architecture Flow
-            </h4>
-            <div className="flex min-w-0 flex-wrap items-center gap-1.5 sm:gap-2">
-              {project.architectureFlow.map((step, i) => (
-                <span key={step} className="flex min-w-0 items-center gap-1.5 sm:gap-2">
-                  <span className="rounded-sm border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 font-mono text-[10px] text-[var(--color-muted)] sm:px-2.5 sm:text-xs">
-                    {step}
-                  </span>
-                  {i < project.architectureFlow.length - 1 && (
-                    <span className="text-[var(--color-accent)]">→</span>
-                  )}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
+        <h3 className="mb-1 text-xl font-bold tracking-tight sm:text-2xl">{project.title}</h3>
+        <p className="mb-6 text-sm text-[var(--color-muted)]">
+          {project.client} · {project.role} · {project.period}
+        </p>
 
         <div className="mb-6 grid min-w-0 gap-5 sm:mb-8 lg:grid-cols-2 lg:gap-6">
           <DetailBlock title="My Responsibilities" items={project.responsibilities} />
           <DetailBlock title="Key Features" items={project.features} />
         </div>
 
-        <div className="mb-8 grid gap-6 sm:grid-cols-2">
+        <div className="mb-6 grid gap-6 sm:grid-cols-2">
           <div>
             <h4 className="mb-3 font-mono text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
               Tech Stack
@@ -157,7 +122,7 @@ function ProjectDetailCard({ project, featured = false }) {
               {project.techStack.map((tech) => (
                 <span
                   key={tech}
-                  className="rounded-sm border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-1 text-xs sm:px-3 sm:py-1.5 sm:text-sm"
+                  className="rounded-sm border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-1 text-xs"
                 >
                   {tech}
                 </span>
@@ -179,18 +144,31 @@ function ProjectDetailCard({ project, featured = false }) {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2 border-t border-[var(--color-border)] pt-6">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-sm bg-[var(--color-accent)]/10 px-2.5 py-0.5 text-[11px] font-medium text-[var(--color-accent)] sm:text-xs"
+        <div className="flex flex-wrap gap-3 border-t border-[var(--color-border)] pt-5">
+          {project.url && (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-[var(--color-accent)] hover:underline"
             >
-              {tag}
-            </span>
-          ))}
+              Live platform ↗
+            </a>
+          )}
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-[var(--color-accent)] hover:underline"
+            >
+              GitHub ↗
+            </a>
+          )}
         </div>
       </div>
-    </SpotlightCard>
+      </SpotlightCard>
+    </div>
   );
 }
 
